@@ -1,0 +1,22 @@
+@media (max-width: 600px) {
+
+    .img-grafico{
+        height: 500px;
+    }
+}
+@media (max-width: 500px) {
+
+    .img-grafico{
+        height: 400px;
+    }
+}
+@media (max-width: 390px) {
+    .logo-hero {
+        width: 120px !important;
+        height: fit-content;
+    }
+    .logo-hero-finsus{
+        width: 120px !important;
+        height: fit-content;
+    }
+}
