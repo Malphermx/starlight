@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
+// import Image from "next/image"
 
 const services = [
   {
@@ -120,10 +120,9 @@ export function Services() {
                 onMouseLeave={() => setActiveIndex(null)}
               >
                 {/* Background Image */}
-                <Image
+                <img
                   src={service.image}
                   alt={service.title}
-                  fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 

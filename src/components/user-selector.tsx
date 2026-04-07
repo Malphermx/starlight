@@ -10,7 +10,7 @@ const userTypes = [
     title: "Paciente / Usuario",
     description: "Necesito atención médica a domicilio, ambulancia o servicios de salud personalizados.",
     cta: "Solicitar Atención",
-    color: "from-primary to-primary/80",
+    color: "bg-hero",
     bgImage: "/images/doctor-home.jpg",
   },
   {
@@ -18,7 +18,7 @@ const userTypes = [
     title: "Corporativo / Empresa",
     description: "Busco soluciones de salud integrales para mi empresa, convenios y ferias de salud.",
     cta: "Cotizar Servicios",
-    color: "from-secondary to-secondary/80",
+    color: "bg-userSelector2",
     bgImage: "/images/corporate.jpg",
   },
   {
@@ -26,7 +26,7 @@ const userTypes = [
     title: "Proveedor / Red Médica",
     description: "Quiero formar parte de la red de profesionales y proveedores de Starlight.",
     cta: "Únete a la Red",
-    color: "from-primary to-secondary",
+    color: "bg-userSelector",
     bgImage: "/images/team.jpg",
   },
 ]
@@ -119,11 +119,11 @@ export function UserSelector() {
                 {/* Content */}
                 <div className="relative z-10 p-8 min-h-[380px] flex flex-col">
                   {/* Icon */}
-                  <div className={cn(
-                    "w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-6 transition-all duration-500",
+                  <div style={type.title === "Paciente / Usuario"?{background:'rgba(7, 67, 140, 0.7)'}:type.title === "Corporativo / Empresa"?{background:'rgba(0, 128, 53, 0.7)'}:{background:'rgba(191, 0, 0, 0.6)'}} className={cn(
+                    "w-16 h-16 rounded-2xl  flex items-center justify-center mb-6 transition-all duration-500",
                     isHovered ? "scale-110 bg-white/30" : ""
                   )}>
-                    <Icon className="w-8 h-8 text-white" />
+                    <Icon className="w-8 h-8 text-white"  />
                   </div>
 
                   {/* Text */}
