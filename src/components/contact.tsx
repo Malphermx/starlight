@@ -17,7 +17,7 @@ const contactInfo = [
   {
     icon: MessageCircle,
     title: "WhatsApp",
-    value: "56 3558 9236",
+    value: "52 1 56-35-58-92-36",
     description: "Respuesta inmediata",
   },
   {

@@ -138,7 +138,9 @@ export function UserSelector() {
                   <div className={cn(
                     "mt-6 flex items-center gap-2 text-white font-semibold transition-all duration-500",
                     isHovered ? "translate-x-2" : ""
-                  )}>
+                  )}
+                  onClick={() => document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })}
+                  >
                     <span>{type.cta}</span>
                     <ArrowRight className={cn(
                       "w-5 h-5 transition-transform duration-300",

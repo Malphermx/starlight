@@ -127,6 +127,7 @@ export function Hero() {
             <Button
               size="lg"
               className="bg-green-500 text-white hover:bg-green-600 gap-2 text-lg px-8 py-6 rounded-full shadow-2xl hover:shadow-green-500/25 transition-all duration-300 hover:scale-105"
+              onClick={() => document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })}
             >
               <MessageCircle className="w-5 h-5" />
               Solicitar Atención
@@ -134,6 +135,7 @@ export function Hero() {
             <Button
               size="lg"
               className="bg-white text-primary hover:bg-white/90 gap-2 text-lg px-8 py-6 rounded-full transition-all duration-300 hover:scale-105"
+              onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
             >
               <Play className="w-5 h-5" />
               Ver Servicios

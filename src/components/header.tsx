@@ -74,6 +74,7 @@ export function Header() {
                   ? "bg-green-500 text-white hover:bg-green-600" 
                   : "bg-green-500 text-white hover:bg-green-600"
               )}
+              onClick={() => window.open('https://wa.me/5215635589236', '_blank')}
             >
               <Phone className="w-4 h-4" />
               <span>WhatsApp</span>
