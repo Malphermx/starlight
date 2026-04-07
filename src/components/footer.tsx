@@ -1,7 +1,5 @@
-"use client"
-
-import Link from "next/link"
-import { Facebook, Instagram, Linkedin, Twitter, ArrowUp } from "lucide-react"
+import { ArrowUp } from "lucide-react"
+import starlight from "../assets/logo_Starlight-02.png"
 
 const footerLinks = {
   servicios: [
@@ -25,13 +23,13 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: ArrowUp, href: "#", label: "ArrowUp" },
+  { icon: ArrowUp, href: "#", label: "ArrowUp" },
+  { icon: ArrowUp, href: "#", label: "ArrowUp" },
+  { icon: ArrowUp, href: "#", label: "LinkedIn" },
 ]
 
-export function Footer() {
+export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
@@ -43,17 +41,21 @@ export function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-xl text-white">
-                S
-              </div>
-              <span className="text-xl font-bold">Starlight</span>
-            </Link>
+            <a href="/" className="flex items-center gap-2 mb-4">
+              <img
+                src={starlight}
+                alt="Starlight Medical Care"
+                width={180}
+                height={60}
+                className="h-12 w-auto transition-all duration-300"
+
+              />
+            </a>
             <p className="text-white/60 mb-6 max-w-sm text-pretty leading-relaxed">
-              Soluciones médicas integrales, donde y cuando las necesites. 
+              Soluciones médicas integrales, donde y cuando las necesites.
               Atención a domicilio, ambulancias, farmacia y equipo médico en todo México.
             </p>
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               {socialLinks.map((social, index) => {
                 const Icon = social.icon
                 return (
@@ -67,7 +69,7 @@ export function Footer() {
                   </a>
                 )
               })}
-            </div>
+            </div> */}
           </div>
 
           {/* Links */}
@@ -76,9 +78,9 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.servicios.map((link, index) => (
                 <li key={index}>
-                  <Link href={link.href} className="text-white/60 hover:text-primary transition-colors">
+                  <a href={link.href} className="text-white/60 hover:text-primary transition-colors">
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -89,9 +91,9 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.empresa.map((link, index) => (
                 <li key={index}>
-                  <Link href={link.href} className="text-white/60 hover:text-primary transition-colors">
+                  <a href={link.href} className="text-white/60 hover:text-primary transition-colors">
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -102,9 +104,9 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link, index) => (
                 <li key={index}>
-                  <Link href={link.href} className="text-white/60 hover:text-primary transition-colors">
+                  <a href={link.href} className="text-white/60 hover:text-primary transition-colors">
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

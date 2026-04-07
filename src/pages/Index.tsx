@@ -1,5 +1,6 @@
 import { Contact } from "@/components/contact";
 import { Coverage } from "@/components/coverage";
+import Footer from "@/components/footer";
 import { Gallery } from "@/components/gallery";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
@@ -21,7 +22,7 @@ const Index = () => {
       <Coverage/>
       <Testimonials/>
       <Contact/>
-      <footer/>
+      <Footer/>
       <WhatsAppButton/>
       {/* <Navbar /> */}
       {/* <HeroSection />
