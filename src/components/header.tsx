@@ -41,9 +41,9 @@ export function Header() {
             <img
               src={starlight}
               alt="Starlight Medical Care"
-              width={180}
-              height={60}
-              className="h-12 w-auto transition-all duration-300"
+              width={200}
+              height={120}
+              className=" transition-all duration-300"
           
             />
           </a>

@@ -83,8 +83,8 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container px-4 relative z-10" >
+        <div className="max-w-4xl "  > 
           {/* Badge */}
           <div
             className={`inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 transition-all duration-1000 ${
@@ -99,7 +99,7 @@ export function Hero() {
 
           {/* Headline */}
           <h1
-            className={`text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6 transition-all duration-1000 delay-200 ${
+            className={`text-4xl md:text-5xl lg:text-5xl font-bold text-white leading-tight mb-6 transition-all duration-1000 delay-200 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
