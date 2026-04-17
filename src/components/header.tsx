@@ -31,7 +31,7 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
           ? "bg-white/95 backdrop-blur-md shadow-lg py-3"
-          : "bg-transparent py-5"
+          : "bg-white py-3"
       )}
     >
       <div className="container mx-auto px-4">
@@ -44,7 +44,7 @@ export function Header() {
               width={200}
               height={120}
               className=" transition-all duration-300"
-          
+
             />
           </a>
 
@@ -53,11 +53,15 @@ export function Header() {
             {navItems.map((item) => (
               <a
                 key={item.label}
-                href={item.href}
+                // href={item.href}
+                // className={cn(
+                //   "relative font-medium transition-colors duration-300 hover:text-primary",
+                //   "after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full",
+                //   isScrolled ? "text-foreground" : "text-white"
+                // )}
                 className={cn(
                   "relative font-medium transition-colors duration-300 hover:text-primary",
-                  "after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full",
-                  isScrolled ? "text-foreground" : "text-white"
+                  "after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                 )}
               >
                 {item.label}
@@ -70,8 +74,8 @@ export function Header() {
             <Button
               className={cn(
                 "gap-2 transition-all duration-300",
-                isScrolled 
-                  ? "bg-green-500 text-white hover:bg-green-600" 
+                isScrolled
+                  ? "bg-green-500 text-white hover:bg-green-600"
                   : "bg-green-500 text-white hover:bg-green-600"
               )}
               onClick={() => window.open('https://wa.me/5215635589236', '_blank')}
@@ -79,12 +83,11 @@ export function Header() {
               <Phone className="w-4 h-4" />
               <span>WhatsApp</span>
             </Button>
-            <Button 
+            <Button
               className={cn(
                 "gap-2 transition-all duration-300",
-                isScrolled
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                  : "bg-white text-primary hover:bg-white/90"
+                "bg-primary text-primary-foreground hover:bg-primary/90"
+
               )}
             >
               <LogIn className="w-4 h-4" />

@@ -3,14 +3,17 @@
 import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react"
+import ambulence from "@/assets/Amb.jpg"
+import rehab from "@/assets/rehab.jpg"
+import oficinas from "@/assets/oficinas.jpg"
 
 const galleryImages = [
-  { src: "/images/ambulance.jpg", title: "Ambulancias de Emergencia", category: "Urgencias" },
+  { src: ambulence, title: "Ambulancias de Emergencia", category: "Urgencias" },
   { src: "/images/doctor-home.jpg", title: "Atención a Domicilio", category: "Consultas" },
   { src: "/images/medical-equipment.jpg", title: "Equipo Médico", category: "Equipamiento" },
   { src: "/images/pharmacy.jpg", title: "Farmacia Especializada", category: "Farmacia" },
-  { src: "/images/therapy.jpg", title: "Rehabilitación", category: "Terapias" },
-  { src: "/images/team.jpg", title: "Nuestro Equipo", category: "Equipo" },
+  { src: rehab, title: "Rehabilitación", category: "Terapias" },
+  { src: oficinas, title: "Oficinas", category: "Instalaciones" },
   { src: "/images/corporate.jpg", title: "Servicios Corporativos", category: "Empresas" },
   { src: "/images/hero-medical.jpg", title: "Atención Integral", category: "Servicios" },
 ]

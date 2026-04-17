@@ -162,5 +162,24 @@
 
 .bg-userSelector2 {
   background: #009161;
-background: linear-gradient(0deg,rgba(0, 145, 97, 0.73) 100%, rgba(253, 187, 45, 1) 100%);
+  background: linear-gradient(0deg, rgba(0, 145, 97, 0.73) 100%, rgba(253, 187, 45, 1) 100%);
 }
+
+@keyframes gentleFloat {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-comment {
+  animation: gentleFloat 4s infinite ease-in-out;
+}
+
