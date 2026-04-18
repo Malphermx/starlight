@@ -12,7 +12,6 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [modalOpen, setModalOpen] = useState(false);
 
-
   useEffect(() => {
     setIsVisible(true)
   }, [])
@@ -30,11 +29,19 @@ export function Hero() {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex items-center overflow-hidden bg-background grid-pattern"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{
+        backgroundImage: `url('${oficinas}')`,
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
+      {/* Degradado blanco superpuesto */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 pointer-events-none z-0" />
 
-      {/* Diagonal accent lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Diagonal accent lines - ahora sobre el degradado */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute w-[200%] h-1 bg-gradient-to-r from-transparent via-primary to-transparent -rotate-12 top-1/3 -left-1/4 opacity-40" />
         <div className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent -rotate-12 top-2/3 -left-1/4 opacity-30" />
       </div>
@@ -43,8 +50,6 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div className="space-y-7">
-
-
             {/* Headline */}
             <div
               className={`space-y-4 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -80,7 +85,6 @@ export function Hero() {
                 Solicitar Atención
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-
             </div>
 
             {/* Stats */}
@@ -90,11 +94,10 @@ export function Hero() {
             >
               {[
                 { value: "Soluciones de Salud para tu Empresa", label: "" },
-                // { value: "30+", label: "Ciudades" },
                 { value: "Únete a la Red de Proveedores", label: "" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="flex items-center  font-black text-primary border rounded-2xl p-3 ctaIni">
+                  <div className="flex items-center font-black text-primary border rounded-2xl p-3 ctaIni">
                     {stat.value}
                     <ArrowRight className="w-7 h-7 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -110,7 +113,7 @@ export function Hero() {
               }`}
           >
             {/* Main Image Card */}
-            <div className="absolute top-12 right-12 w-[500px] h-[450px] overflow-hidden  bg-card">
+            <div className="absolute top-12 right-12 w-[500px] h-[450px] overflow-hidden bg-card">
               <img
                 src={oficinas}
                 alt="Equipo médico"
@@ -130,26 +133,21 @@ export function Hero() {
               className="absolute bottom-20 left-12 bg-primary text-primary-foreground p-6 rounded-2xl"
               style={{ animationDelay: "2s" }}
             >
-              <div className="text-sm font-bold uppercase tracking-wider ">Atención</div>
+              <div className="text-sm font-bold uppercase tracking-wider">Atención</div>
               <div className="text-2xl font-black">24/7</div>
             </div>
 
             {/* Decorative Elements */}
             <div className="absolute top-1/2 -left-8 w-16 h-16 border-2 border-primary/30 rotate-45 rounded-2xl" />
             <div className="absolute top-1 -left-20 w-16 h-16 border-2 border-primary/30 rotate-45 rounded-2xl" />
-            <div className="absolute bottom-0 right-1/4 w-24 h-1 bg-primary " />
-            {/* <div className="absolute bottom-0 right-1 w-24 h-1 bg-primary " /> */}
+            <div className="absolute bottom-0 right-1/4 w-24 h-1 bg-primary" />
           </div>
         </div>
       </div>
 
-      {/* Bottom Diagonal Section Divider */}
-      {/* <div className="absolute bottom-0 left-0 right-0 h-32 bg-card clip-diagonal-top" /> */}
-
       <LeadModal
         open={modalOpen}
         onOpenChange={setModalOpen}
-      // segment={segment}
       />
     </section>
   )
