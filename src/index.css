@@ -183,3 +183,8 @@
   animation: gentleFloat 4s infinite ease-in-out;
 }
 
+.ctaIni:hover{
+  background-color: rgb(97, 209, 138);
+  color: white;
+  cursor: pointer;
+}

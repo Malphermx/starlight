@@ -14,46 +14,6 @@ interface UserSegmentProps {
   segment: "pacientes" | "corporativos" | "proveedores";
 }
 
-// ---------- Partículas ----------
-const ParticlesEffect = () => {
-  const particles = useMemo(() =>
-    Array.from({ length: 40 }).map((_, i) => ({
-      id: i,
-      size: Math.random() * 26 + 2,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      duration: Math.random() * 12 + 6,
-      delay: Math.random() * 4,
-    })), []);
-
-  return (
-    <div className="absolute inset-0" >
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className=" rounded-full bg-white/60"
-          style={{
-            width: p.size,
-            height: p.size,
-            left: p.left,
-            top: p.top,
-            animation: `floatParticle ${p.duration}s infinite ease-in-out`,
-            animationDelay: `${p.delay}s`,
-            // border:'1px solid red'
-          }}
-        />
-      ))}
-      <style>{`
-        @keyframes floatParticle {
-          0% { transform: translateY(0) translateX(0); opacity: 0; }
-          20% { opacity: 0.8; }
-          80% { opacity: 0.8; }
-          100% { transform: translateY(-30px) translateX(15px); opacity: 0; }
-        }
-      `}</style>
-    </div>
-  );
-};
 
 // ---------- Comentarios flotantes ----------
 interface FloatingCommentsProps {
@@ -131,7 +91,6 @@ export function Hero1({
   const [modalOpen, setModalOpen] = useState(false);
 
   const renderExtraEffect = () => {
-    // if (segment === "pacientes") return <ParticlesEffect />;
     if (segment === "corporativos" || segment === "proveedores") {
       return <FloatingComments segment={segment} />;
     }

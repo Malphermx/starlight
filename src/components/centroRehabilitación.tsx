@@ -38,7 +38,7 @@ const features = [
 
 // Datos estadísticos (sin fotos)
 const stats = [
-    { value: "+15", label: "años de experiencia" },
+    { value: "+10", label: "años de experiencia" },
     { value: "98%", label: "satisfacción del paciente" },
     { value: "24/7", label: "disponibilidad de emergencia" }
 ];
