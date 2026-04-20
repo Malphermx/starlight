@@ -133,11 +133,20 @@ export function Header() {
               </a>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t">
-              <Button variant="outline" className="gap-2 w-full">
+              <Button
+                variant="outline"
+                className="gap-2 w-full"
+                onClick={() => window.open('https://wa.me/5215635589236', '_blank')}
+              >
                 <Phone className="w-4 h-4" />
                 WhatsApp
               </Button>
-              <Button className="gap-2 w-full">
+              <Button
+                className="gap-2 w-full"
+                onClick={() => {
+                  navigate("/login")
+                }}
+              >
                 <LogIn className="w-4 h-4" />
                 Portal
               </Button>
