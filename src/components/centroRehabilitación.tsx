@@ -83,10 +83,10 @@ export function CentroRehabilitacion() {
                     )}
                 >
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 text-balance">
-                        Centro de Rehabilitación
+                        ¿Conoces nuestro centro de rehabilitación?
                     </h2>
                     <p className="text-white/70 text-lg text-pretty max-w-2xl mx-auto">
-                        Contamos con terapia física, pulmonar, ocupacional, terapia deglución, neurológica y de lenguaje
+                        Ofrecemos terapias especializadas: física, pulmonar, ocupacional, de deglución, neurológica y de lenguaje.
                     </p>
                 </div>
 

@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react"
 import ambulence from "@/assets/Amb.jpg"
 import rehab from "@/assets/rehab.jpg"
 import oficinas from "@/assets/oficinas.jpg"
+import personal from "@/assets/personal.jpeg"
 
 const galleryImages = [
   { src: ambulence, title: "Ambulancias de Emergencia", category: "Urgencias" },
@@ -14,7 +15,9 @@ const galleryImages = [
   { src: "/images/pharmacy.jpg", title: "Farmacia Especializada", category: "Farmacia" },
   { src: rehab, title: "Rehabilitación", category: "Terapias" },
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },
-  { src: "/images/corporate.jpg", title: "Servicios Corporativos", category: "Empresas" },
+  { src: personal, title: "Servicios Corporativos", category: "Empresas" },
+  { src: personal, title: "Servicios Corporativos", category: "Empresas" },
+  { src: "/images/hero-medical.jpg", title: "Atención Integral", category: "Servicios" },
   { src: "/images/hero-medical.jpg", title: "Atención Integral", category: "Servicios" },
 ]
 

@@ -7,10 +7,11 @@ import video from '@/video/IMG_4774.mp4';
 import ambulence from "@/assets/Amb.jpg"
 import rehab from "@/assets/rehab.jpg"
 import farm from "@/assets/farm.jpg"
+import domicilio from "@/assets/domicilio.jpeg"
 
 const services = [
   {
-    image: "/images/service-home-care.jpg",
+    image: domicilio,
     title: "Atención Médica a Domicilio",
     description:
       "Médicos generales y especialistas que te visitan en casa. Consultas, diagnósticos y seguimiento personalizado.",

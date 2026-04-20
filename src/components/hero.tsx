@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Play } from "lucide-react"
 // import { LeadModal } from "@/components/LeadModal";
 import oficinas from "@/assets/oficinas.jpg"
+import ambulancia from "@/assets/hero_ambulancia.png"
 import { ModalRegistro } from "./ModalRegistro"
 
 export function Hero() {
@@ -72,7 +73,7 @@ export function Hero() {
 
             {/* Subtitle */}
             <p
-              className={`text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              className={`text-lg md:text-xl  max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
             >
               Soluciones médicas integrales a tu alcance. Desde atención domiciliaria
@@ -96,19 +97,19 @@ export function Hero() {
 
             {/* Opciones adicionales como botones clickeables */}
             <div
-              className={`flex gap-12 pt-8 border-t border-border transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              className={`flex gap-12 pt-8 border-top-green transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
             >
               <button
                 onClick={() => openModalWithType("empresa")}
-                className="flex items-center font-black text-primary border rounded-2xl p-3 ctaIni hover:bg-primary/10 transition-colors"
+                className="flex items-center font-black text-primary border-green rounded-2xl p-3 ctaIni transition-colors"
               >
                 Soluciones de Salud para tu Empresa
                 <ArrowRight className="w-7 h-7 ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => openModalWithType("proveedor")}
-                className="flex items-center font-black text-primary border rounded-2xl p-3 ctaIni hover:bg-primary/10 transition-colors"
+                className="flex items-center font-black text-primary border-green rounded-2xl p-3 ctaIni transition-colors"
               >
                 Únete a la Red de Proveedores
                 <ArrowRight className="w-7 h-7 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -124,7 +125,7 @@ export function Hero() {
             {/* Main Image Card */}
             <div className="absolute top-12 right-12 w-[500px] h-[450px] overflow-hidden bg-card">
               <img
-                src={oficinas}
+                src={ambulancia}
                 alt="Equipo médico"
                 className="w-full h-full object-cover rounded-2xl"
               />
