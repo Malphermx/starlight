@@ -5,10 +5,12 @@ import { Menu, X, Phone, LogIn } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import starlight from "../assets/logo_Starlight-01.png"
+import { useNavigate } from "react-router-dom"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,6 +91,9 @@ export function Header() {
                 "bg-primary text-primary-foreground hover:bg-primary/90"
 
               )}
+              onClick={() => {
+                navigate("/login")
+              }}
             >
               <LogIn className="w-4 h-4" />
               <span>Portal</span>

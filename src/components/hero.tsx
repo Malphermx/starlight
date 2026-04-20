@@ -3,14 +3,21 @@
 import { useEffect, useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play } from "lucide-react"
-import { LeadModal } from "@/components/LeadModal";
+// import { LeadModal } from "@/components/LeadModal";
 import oficinas from "@/assets/oficinas.jpg"
+import { ModalRegistro } from "./ModalRegistro"
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
   const [modalOpen, setModalOpen] = useState(false);
+  const [prospectType, setProspectType] = useState<"general" | "empresa" | "proveedor">("general");
+
+  const openModalWithType = (type: "general" | "empresa" | "proveedor") => {
+    setProspectType(type);
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     setIsVisible(true)
@@ -40,7 +47,7 @@ export function Hero() {
       {/* Degradado blanco superpuesto */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 pointer-events-none z-0" />
 
-      {/* Diagonal accent lines - ahora sobre el degradado */}
+      {/* Diagonal accent lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute w-[200%] h-1 bg-gradient-to-r from-transparent via-primary to-transparent -rotate-12 top-1/3 -left-1/4 opacity-40" />
         <div className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent -rotate-12 top-2/3 -left-1/4 opacity-30" />
@@ -80,30 +87,32 @@ export function Hero() {
               <Button
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 text-base font-bold px-8 h-14 gap-2 group"
-                onClick={() => setModalOpen(true)}
+                onClick={() => openModalWithType("general")}
               >
                 Solicitar Atención
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
 
-            {/* Stats */}
+            {/* Opciones adicionales como botones clickeables */}
             <div
               className={`flex gap-12 pt-8 border-t border-border transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
             >
-              {[
-                { value: "Soluciones de Salud para tu Empresa", label: "" },
-                { value: "Únete a la Red de Proveedores", label: "" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="flex items-center font-black text-primary border rounded-2xl p-3 ctaIni">
-                    {stat.value}
-                    <ArrowRight className="w-7 h-7 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
+              <button
+                onClick={() => openModalWithType("empresa")}
+                className="flex items-center font-black text-primary border rounded-2xl p-3 ctaIni hover:bg-primary/10 transition-colors"
+              >
+                Soluciones de Salud para tu Empresa
+                <ArrowRight className="w-7 h-7 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button
+                onClick={() => openModalWithType("proveedor")}
+                className="flex items-center font-black text-primary border rounded-2xl p-3 ctaIni hover:bg-primary/10 transition-colors"
+              >
+                Únete a la Red de Proveedores
+                <ArrowRight className="w-7 h-7 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
@@ -144,11 +153,16 @@ export function Hero() {
           </div>
         </div>
       </div>
-
-      <LeadModal
+      <ModalRegistro
         open={modalOpen}
         onOpenChange={setModalOpen}
+        tipoProspecto={prospectType}
       />
+      {/* <LeadModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        tipoProspecto={prospectType}
+      /> */}
     </section>
   )
 }
