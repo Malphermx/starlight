@@ -111,8 +111,9 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
       })
 
       const data = await response.json()
-
-      if (!response.ok) {
+      console.log(data.error, "response.ok")
+      if (data?.error) {
+      
         throw new Error(data.error || "Error al registrar")
       }
 
