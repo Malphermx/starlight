@@ -10,11 +10,12 @@ import personal from "@/assets/personal.jpeg"
 import atencion_domicilio from "@/assets/atencion_domicilio.jpeg"
 import centro_rehab from "@/assets/centro_rehab.jpeg"
 import consultas from "@/assets/consultas.jpeg"
+import equipomedico from "@/assets/equipomedico.jpg"
 
 const galleryImages = [
   { src: ambulence, title: "Ambulancias de Emergencia", category: "Urgencias" },
   { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
-  { src: "/images/medical-equipment.jpg", title: "Equipo Médico", category: "Equipamiento" },
+  { src: equipomedico, title: "Equipo Médico", category: "Equipamiento" },
   { src: "/images/pharmacy.jpg", title: "Farmacia Corporativa", category: "Farmacia" },
   { src: rehab, title: "Rehabilitación", category: "Terapias" },
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },

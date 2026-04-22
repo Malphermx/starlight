@@ -223,8 +223,17 @@
   margin-top: 40px;
   height: auto;
 }
+.width-why{
+  width: 80%;
+}
+.w-why-80{
+  width: 80%;
+}
 @media (max-width: 992px) {
    .md-none{
     display: none;
+   }
+   .w-why-80{
+    width: 100%;
    }
 }
