@@ -200,3 +200,31 @@
   background-color: #2C9653;
   color: white;
 }
+.bg-blue{
+  background: #2A7B9B;
+}
+.card-hero{
+  top: 100px;
+  left: 0px;
+}
+.card-hero1{
+  bottom: 0px;
+  right: 0px;
+}
+.text-green{
+  color: #2C9653;
+}
+.text-blue{
+  color: #171a1d;
+}
+.card-centro{
+  background-color: rgba(255, 255, 255,0.9);
+  border-radius: 20px;
+  margin-top: 40px;
+  height: auto;
+}
+@media (max-width: 992px) {
+   .md-none{
+    display: none;
+   }
+}

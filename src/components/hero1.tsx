@@ -1,154 +1,182 @@
-import { useState, useEffect, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { LeadModal } from "@/components/LeadModal";
-import { ArrowRight } from "lucide-react";
+"use client"
+
+import { useEffect, useState, useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Play } from "lucide-react"
+// import { LeadModal } from "@/components/LeadModal";
+import oficinas from "@/assets/oficinas.jpg"
+import ambulancia from "@/assets/hero_ambulancia.png"
+import doctor_hero from "@/assets/doctor_hero.png"
+import { ModalRegistro } from "./ModalRegistro"
 import { motion } from "framer-motion";
 
-interface UserSegmentProps {
-  title: string;
-  subtitle: string;
-  description: string;
-  imageSrc: string;
-  imageAlt: string;
-  reversed?: boolean;
-  segment: "pacientes" | "corporativos" | "proveedores";
-}
+export function Hero() {
+  const [isVisible, setIsVisible] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [prospectType, setProspectType] = useState<"general" | "empresa" | "proveedor">("general");
 
-
-// ---------- Comentarios flotantes ----------
-interface FloatingCommentsProps {
-  segment: "corporativos" | "proveedores";
-}
-
-const FloatingComments = ({ segment }: FloatingCommentsProps) => {
-  const commentsPool = useMemo(() => {
-    return segment === "corporativos"
-      ? [
-        "10 años de experiencia",
-        "Cobertura nacional",
-        "+7 empresas aliadas",
-        "Atención 24/7",
-        // "Certificación ISO",
-        "Equipo especializado",
-      ]
-      : [
-        // "Únete a la Red de Proveedores",
-        "Red médica líder en México",
-        // "Conecta con miles de pacientes",
-        "Aumenta tu visibilidad",
-        "Accede a corporativos",
-        "Sin costos de afiliación",
-      ];
-  }, [segment]);
-
-  const [comments, setComments] = useState<string[]>([]);
-
-  const getRandomComments = () => {
-    const shuffled = [...commentsPool].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
+  const openModalWithType = (type: "general" | "empresa" | "proveedor") => {
+    setProspectType(type);
+    setModalOpen(true);
   };
 
   useEffect(() => {
-    setComments(getRandomComments());
-    const interval = setInterval(() => {
-      setComments(getRandomComments());
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [segment]);
+    setIsVisible(true)
+  }, [])
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    setMousePosition({
+      x: (e.clientX - rect.left) / rect.width,
+      y: (e.clientY - rect.top) / rect.height,
+    })
+  }
 
   return (
-    // <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[180px] z-10" >
-    <div className="absolute inset-0 w-full  rounded-[180px] " >
+    <section
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{
+        backgroundImage: `url('${oficinas}')`,
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Degradado blanco superpuesto */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 pointer-events-none z-0" />
 
-      {comments.map((text, idx) => (
-        <motion.div
-          key={text + idx}
-          initial={{ opacity: 0, x: 40, scale: 0.9 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.5, delay: idx * 0.2 }}
-          className="absolute bg-white/90 backdrop-blur-sm text-gray-800 text-sm md:text-base font-medium px-4 py-2 rounded-full shadow-lg floating-comment"
-          style={{
-            top: `${120 + idx * 80}px`,
-            right: `${20 + idx * 30}px`,
-            maxWidth: "85%",
-            textAlign: 'center'
-          }}
-        >
-          {text}
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-
-// ---------- Hero ----------
-export function Hero1({
-  title,
-  description,
-  reversed = false,
-  segment,
-}: UserSegmentProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const renderExtraEffect = () => {
-    if (segment === "corporativos" || segment === "proveedores") {
-      return <FloatingComments segment={segment} />;
-    }
-    return null;
-  };
-
-  return (
-    <>
-      <div
-        className="w-full lg:w-4/5 mx-auto px-4 lg:px-0 mb-8 lg:mb-12"
-        
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className={`flex flex-col ${reversed ? "lg:flex-row-reverse" : "lg:flex-row"
-            } items-center justify-center py-12 lg:py-16 rounded-[180px] relative overflow-hidden z-50`}
-        >
-          {/* Texto */}
-          <div className="flex-1 space-y-6 p-6 lg:px-12 z-20">
-            <h2 className="text-2xl lg:text-4xl font-extrabold text-white leading-tight">
-              {title}
-            </h2>
-
-            <p className="text-base lg:text-lg text-white/90 max-w-lg">
-              {description}
-            </p>
-
-            <Button
-              size="lg"
-              className="group gap-2 text-base font-semibold rounded-full px-8"
-              onClick={() => setModalOpen(true)}
-            >
-              Solicitar Información
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </div>
-
-          {/* Visual */}
-          <div className="flex-1 flex justify-center relative min-h-[280px] lg:min-h-[400px]">
-            <div className="relative w-64 lg:w-80 h-full">
-              {/* Fondo */}
-              <div className="absolute inset-0  bg-accent rounded-[180px]  shadow-2xl" />
-
-              {/* Efectos */}
-              {renderExtraEffect()}
-            </div>
-          </div>
-        </motion.div>
+      {/* Diagonal accent lines */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute w-[200%] h-1 bg-gradient-to-r from-transparent via-primary to-transparent -rotate-12 top-1/3 -left-1/4 opacity-40" />
+        <div className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent -rotate-12 top-2/3 -left-1/4 opacity-30" />
       </div>
 
-      <LeadModal
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 py-32">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Content */}
+          <div className="space-y-7">
+            {/* Headline */}
+            <div
+              className={`space-y-4 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+            >
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight text-balance">
+                <span className="text-foreground">CUIDAMOS</span>
+                <br />
+                <span className="text-foreground">TU</span>{" "}
+                <span className="text-primary">SALUD</span>
+              </h1>
+            </div>
+
+            {/* Subtitle */}
+            <p
+              className={`text-lg md:text-xl  max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+            >
+              Soluciones médicas integrales al alcance de tu mano. Desde atención domiciliaria hasta traslados de emergencia, estamos contigo cuando más lo necesitas.
+            </p>
+
+            {/* CTAs */}
+            <div
+              className={`flex flex-wrap gap-4 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+            >
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 text-base font-bold px-8 h-14 gap-2 group"
+                onClick={() => openModalWithType("general")}
+              >
+                Solicitar Atención
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+
+            {/* Opciones adicionales como botones clickeables */}
+            <div
+              className={`flex gap-12 pt-8 border-top-green transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+            >
+              <button
+                onClick={() => openModalWithType("empresa")}
+                className="flex items-center font-black text-primary border-green rounded-2xl p-3 ctaIni transition-colors"
+              >
+                Soluciones de Salud para tu Empresa
+                <ArrowRight className="w-7 h-7 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button
+                onClick={() => openModalWithType("proveedor")}
+                className="flex items-center font-black text-primary border-green rounded-2xl p-3 ctaIni transition-colors"
+              >
+                Únete a la Red de Proveedores
+                <ArrowRight className="w-7 h-7 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+
+          {/* Right Content - Floating Cards */}
+          <div
+            className={`relative hidden lg:block h-[600px] transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
+              }`}
+          // style={{ border: '1px solid red' }}
+          >
+            {/* Main Image Card */}
+            {/* <div className="absolute top-12 right-12 w-[500px] h-[450px] overflow-hidden bg-card"> */}
+            <div className="absolute top-12 right-12  overflow-hidden ">
+              <img
+                src={doctor_hero}
+                alt="Equipo médico"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+            </div>
+
+            {/* Floating Badge 1 */}
+            <div className="absolute card-hero bg-card border border-border p-6 animate-float rounded-2xl">
+              <div className="text-4xl font-black text-primary">+10</div>
+              <div className="text-sm text-muted-foreground">Años de experiencia</div>
+            </div>
+
+            {/* Floating Badge 2 */}
+            
+            <div
+              className="absolute bottom-20 left-12 bg-primary text-primary-foreground p-6 rounded-2xl"
+              style={{ animationDelay: "2s" }}
+            >
+              <div className="text-sm font-bold uppercase tracking-wider">Atención</div>
+              <div className="text-2xl font-black">24/7</div>
+            </div>
+
+            {/* Floating Badge 2 */}
+            <div
+              className="absolute card-hero1  bg-blue text-primary-foreground p-6 rounded-2xl"
+              style={{ animationDelay: "2s" }}
+            >
+              <div className="text-sm font-bold uppercase tracking-wider">Cobertura</div>
+              <div className="text-2xl font-black">servicios a nivel nacional</div>
+            </div>
+
+            {/* Decorative Elements */}
+            <div className="absolute top-1/2 -left-8 w-16 h-16 border-2 border-primary/30 rotate-45 rounded-2xl" />
+            <div className="absolute top-1 -left-20 w-16 h-16 border-2 border-primary/30 rotate-45 rounded-2xl" />
+            <div className="absolute bottom-0 right-1/4 w-24 h-1 bg-primary" />
+          </div>
+        </div>
+      </div>
+      <ModalRegistro
         open={modalOpen}
         onOpenChange={setModalOpen}
-        segment={segment}
+        tipoProspecto={prospectType}
       />
-    </>
-  );
+      {/* <LeadModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        tipoProspecto={prospectType}
+      /> */}
+    </section>
+  )
 }

@@ -7,18 +7,21 @@ import ambulence from "@/assets/Amb.jpg"
 import rehab from "@/assets/rehab.jpg"
 import oficinas from "@/assets/oficinas.jpg"
 import personal from "@/assets/personal.jpeg"
+import atencion_domicilio from "@/assets/atencion_domicilio.jpeg"
+import centro_rehab from "@/assets/centro_rehab.jpeg"
+import consultas from "@/assets/consultas.jpeg"
 
 const galleryImages = [
   { src: ambulence, title: "Ambulancias de Emergencia", category: "Urgencias" },
-  { src: "/images/doctor-home.jpg", title: "Atención a Domicilio", category: "Consultas" },
+  { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
   { src: "/images/medical-equipment.jpg", title: "Equipo Médico", category: "Equipamiento" },
-  { src: "/images/pharmacy.jpg", title: "Farmacia Especializada", category: "Farmacia" },
+  { src: "/images/pharmacy.jpg", title: "Farmacia Corporativa", category: "Farmacia" },
   { src: rehab, title: "Rehabilitación", category: "Terapias" },
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },
-  { src: personal, title: "Servicios Corporativos", category: "Empresas" },
-  { src: personal, title: "Servicios Corporativos", category: "Empresas" },
+  { src: personal, title: "Equipo", category: "Empresas" },
+  { src: consultas, title: "Consultas", category: "Terapias" },
   { src: "/images/hero-medical.jpg", title: "Atención Integral", category: "Servicios" },
-  { src: "/images/hero-medical.jpg", title: "Atención Integral", category: "Servicios" },
+  { src: centro_rehab, title: "Centro de Rehabilitación", category: "Servicios" },
 ]
 
 export function Gallery() {

@@ -5,7 +5,9 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mail, MapPin, MessageCircle, Send, Clock } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Loader2, Phone, Mail, MapPin, MessageCircle, Send, Clock } from "lucide-react"
+import { urlBack } from "@/hooks/url_enpoint"
 
 const contactInfo = [
   {
@@ -34,13 +36,49 @@ const contactInfo = [
   },
 ]
 
+const serviciosDisponibles = [
+  { id: "atencionmedica", label: "Atención médica" },
+  { id: "ambulancias", label: "Ambulancias y urgencias" },
+  { id: "farmacia", label: "Farmacia" },
+  { id: "rehabilitacion", label: "Rehabilitación" },
+  { id: "enfermeria", label: "Enfermería" },
+  { id: "oxigeno", label: "Oxígeno y ventilación" },
+  { id: "equipo", label: "Equipo médico y material de curación" },
+]
+
+// Constantes de validación
+const MAX_LENGTH_NAME_EMAIL_PHONE = 100
+const MAX_LENGTH_MESSAGE = 1000
+
+// Función para eliminar emojis y truncar texto (nombre y mensaje)
+const sanitizeInput = (value: string, maxLength: number): string => {
+  const withoutEmojis = value.replace(/[\p{Emoji}]/gu, '')
+  return withoutEmojis.slice(0, maxLength)
+}
+
+// Función específica para correo: solo elimina emojis, permite números y todo lo demás
+const sanitizeEmail = (value: string, maxLength: number): string => {
+  const withoutEmojis = value.replace(/[\p{Emoji}]/gu, '')
+  return withoutEmojis.slice(0, maxLength)
+}
+
+// Función específica para el teléfono: solo números
+const sanitizePhone = (value: string, maxLength: number): string => {
+  const onlyNumbers = value.replace(/\D/g, '')
+  return onlyNumbers.slice(0, maxLength)
+}
+
 export function Contact() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
+    serviciosSolicitados: [] as string[],
   })
   const sectionRef = useRef<HTMLDivElement>(null)
 
@@ -61,10 +99,108 @@ export function Contact() {
     return () => observer.disconnect()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    let sanitizedValue = value
+
+    if (name === "message") {
+      sanitizedValue = sanitizeInput(value, MAX_LENGTH_MESSAGE)
+    } else if (name === "phone") {
+      sanitizedValue = sanitizePhone(value, MAX_LENGTH_NAME_EMAIL_PHONE)
+    } else if (name === "email") {
+      sanitizedValue = sanitizeEmail(value, MAX_LENGTH_NAME_EMAIL_PHONE)
+    } else if (name === "name") {
+      sanitizedValue = sanitizeInput(value, MAX_LENGTH_NAME_EMAIL_PHONE)
+    }
+
+    setFormState(prev => ({ ...prev, [name]: sanitizedValue }))
+    setError(null)
+  }
+
+  const handleServiceToggle = (serviceId: string, checked: boolean) => {
+    setFormState(prev => ({
+      ...prev,
+      serviciosSolicitados: checked
+        ? [...prev.serviciosSolicitados, serviceId]
+        : prev.serviciosSolicitados.filter(id => id !== serviceId)
+    }))
+    setError(null)
+  }
+
+  const validateForm = (): boolean => {
+    if (!formState.name.trim()) {
+      setError("El nombre completo es obligatorio")
+      return false
+    }
+    if (!formState.email.trim()) {
+      setError("El correo electrónico es obligatorio")
+      return false
+    }
+    const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/
+    if (!emailRegex.test(formState.email)) {
+      setError("Correo electrónico inválido")
+      return false
+    }
+    if (!formState.phone.trim()) {
+      setError("El teléfono es obligatorio")
+      return false
+    }
+    if (!/^\d+$/.test(formState.phone)) {
+      setError("El teléfono solo puede contener números")
+      return false
+    }
+    if (formState.serviciosSolicitados.length === 0) {
+      setError("Debes seleccionar al menos un servicio")
+      return false
+    }
+    return true
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formState)
+    if (!validateForm()) return
+
+    setIsSubmitting(true)
+    setError(null)
+
+    const payload = {
+      nombreCompleto: formState.name.trim(),
+      correoElectronico: formState.email.trim(),
+      telefono: formState.phone.trim(),
+      mensaje: formState.message.trim() || null,
+      tipoProspecto: "general",
+      serviciosSolicitados: formState.serviciosSolicitados,
+    }
+
+    try {
+      const response = await fetch(`${urlBack}prospectos.php/registro`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      const data = await response.json()
+      if (data?.error) {
+        throw new Error(data.error || "Error al registrar")
+      }
+
+      setSuccess(true)
+      // Resetear formulario después de 2 segundos
+      setTimeout(() => {
+        setFormState({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          serviciosSolicitados: [],
+        })
+        setSuccess(false)
+      }, 2000)
+    } catch (err: any) {
+      setError(err.message || "Ocurrió un error inesperado")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -152,63 +288,117 @@ export function Contact() {
                 Completa el formulario y nos pondremos en contacto contigo
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Nombre completo
-                  </label>
-                  <Input
-                    placeholder="Tu nombre"
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="h-12 rounded-xl"
-                  />
+              {success ? (
+                <div className="py-8 text-center">
+                  <div className="text-green-600 text-lg font-semibold mb-2">¡Registro exitoso!</div>
+                  <p className="text-muted-foreground">Gracias por contactarnos. En breve recibirá respuesta.</p>
                 </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Email
+                      Nombre completo *
                     </label>
                     <Input
-                      type="email"
-                      placeholder="tu@email.com"
-                      value={formState.email}
-                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                      name="name"
+                      placeholder="Tu nombre"
+                      value={formState.name}
+                      onChange={handleInputChange}
                       className="h-12 rounded-xl"
+                      disabled={isSubmitting}
+                      maxLength={MAX_LENGTH_NAME_EMAIL_PHONE}
+                      required
                     />
                   </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Email *
+                      </label>
+                      <Input
+                        name="email"
+                        type="email"
+                        placeholder="tu@email.com"
+                        value={formState.email}
+                        onChange={handleInputChange}
+                        className="h-12 rounded-xl"
+                        disabled={isSubmitting}
+                        maxLength={MAX_LENGTH_NAME_EMAIL_PHONE}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Teléfono *
+                      </label>
+                      <Input
+                        name="phone"
+                        type="tel"
+                        placeholder="55 1234 5678"
+                        value={formState.phone}
+                        onChange={handleInputChange}
+                        className="h-12 rounded-xl"
+                        disabled={isSubmitting}
+                        maxLength={MAX_LENGTH_NAME_EMAIL_PHONE}
+                        required
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Teléfono
+                      Mensaje (opcional)
                     </label>
-                    <Input
-                      type="tel"
-                      placeholder="55 1234 5678"
-                      value={formState.phone}
-                      onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                      className="h-12 rounded-xl"
+                    <Textarea
+                      name="message"
+                      placeholder="¿En qué podemos ayudarte?"
+                      value={formState.message}
+                      onChange={handleInputChange}
+                      className="min-h-[120px] rounded-xl resize-none"
+                      disabled={isSubmitting}
+                      maxLength={MAX_LENGTH_MESSAGE}
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Mensaje
-                  </label>
-                  <Textarea
-                    placeholder="¿En qué podemos ayudarte?"
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    className="min-h-[120px] rounded-xl resize-none"
-                  />
-                </div>
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Servicios que solicita *
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {serviciosDisponibles.map(service => (
+                        <div key={service.id} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={service.id}
+                            checked={formState.serviciosSolicitados.includes(service.id)}
+                            onCheckedChange={(checked) => handleServiceToggle(service.id, checked as boolean)}
+                            disabled={isSubmitting}
+                          />
+                          <label
+                            htmlFor={service.id}
+                            className="text-sm font-normal cursor-pointer text-foreground"
+                          >
+                            {service.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-                <Button type="submit" size="lg" className="w-full rounded-xl gap-2">
-                  <Send className="w-5 h-5" />
-                  Enviar Mensaje
-                </Button>
-              </form>
+                  {error && (
+                    <div className="text-red-500 text-sm bg-red-50 p-2 rounded">{error}</div>
+                  )}
+
+                  <Button type="submit" size="lg" className="w-full rounded-xl gap-2" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Send className="w-5 h-5" />
+                    )}
+                    {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </div>

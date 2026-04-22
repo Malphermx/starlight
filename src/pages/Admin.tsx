@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   LogOut, User, Mail, Phone, Calendar, MessageSquare, Tag, Trash2, AlertTriangle, Info,
-  Building, Users, Briefcase, FileText
+  Building, Users, Briefcase, FileText, Eye
 } from "lucide-react";
 import { urlBack } from "@/hooks/url_enpoint";
 
-const PROSPECTOS_ENDPOINT = `${urlBack}/prospectos.php`;      // GET (listar) y POST (registro)
-const ELIMINAR_ENDPOINT = `${urlBack}/eliminar_prospecto.php`; // DELETE ?id=
+const PROSPECTOS_ENDPOINT = `${urlBack}/prospectos.php`;
+const ELIMINAR_ENDPOINT = `${urlBack}/eliminar_prospecto.php`;
 
 interface Prospecto {
   id: number;
@@ -16,7 +16,7 @@ interface Prospecto {
   correoElectronico: string;
   telefono: string;
   mensaje: string | null;
-  serviciosSolicitados: string[] | null; // array de strings o null
+  serviciosSolicitados: string[] | null;
   tipoProspecto: "general" | "empresa" | "proveedor";
   fecha_creacion: string;
 }
@@ -38,6 +38,10 @@ const AdminProspectos = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertTitle, setAlertTitle] = useState("Aviso");
 
+  // Modal de detalles completos
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [selectedProspecto, setSelectedProspecto] = useState<Prospecto | null>(null);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -48,6 +52,22 @@ const AdminProspectos = () => {
     }
     fetchProspectos();
   }, [token, navigate]);
+
+  // Normalizar cada prospecto (asegurar que serviciosSolicitados sea array)
+  const normalizeProspecto = (raw: any): Prospecto => {
+    let servicios = raw.serviciosSolicitados;
+    if (typeof servicios === "string") {
+      try {
+        servicios = JSON.parse(servicios);
+      } catch {
+        servicios = null;
+      }
+    }
+    return {
+      ...raw,
+      serviciosSolicitados: Array.isArray(servicios) ? servicios : null,
+    };
+  };
 
   const fetchProspectos = async () => {
     setLoading(true);
@@ -70,15 +90,8 @@ const AdminProspectos = () => {
       if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
 
       const data = await response.json();
-      console.log(data)
-      setProspectos(data)
-      // Asegurar que serviciosSolicitados sea un array si viene como string JSON
-      // const normalized = data.map((p: any) => ({
-      //   ...p,
-      //   serviciosSolicitados: p.serviciosSolicitados ? JSON.parse(p.serviciosSolicitados) : null,
-      // }));
-      // console.log(data)
-      // setProspectos(normalized);
+      const normalized = data.map(normalizeProspecto);
+      setProspectos(normalized);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "No se pudo cargar la lista de prospectos.");
@@ -119,7 +132,6 @@ const AdminProspectos = () => {
         throw new Error(errorData.error || "Error al eliminar el prospecto");
       }
 
-      // Actualizar estado local
       setProspectos((prev) => prev.filter((p) => p.id !== id));
       showAlert("Prospecto eliminado correctamente", "Éxito");
     } catch (err: any) {
@@ -148,12 +160,20 @@ const AdminProspectos = () => {
     setAlertTitle("Aviso");
   };
 
-  // Filtrar prospectos según la pestaña activa
+  const openDetailModal = (prospecto: Prospecto) => {
+    setSelectedProspecto(prospecto);
+    setShowDetailModal(true);
+  };
+
+  const closeDetailModal = () => {
+    setShowDetailModal(false);
+    setSelectedProspecto(null);
+  };
+
   const prospectosFiltrados = filtro === "todos"
     ? prospectos
     : prospectos.filter((p) => p.tipoProspecto === filtro);
 
-  // Contadores para las pestañas
   const counts = {
     todos: prospectos.length,
     general: prospectos.filter((p) => p.tipoProspecto === "general").length,
@@ -161,7 +181,6 @@ const AdminProspectos = () => {
     proveedor: prospectos.filter((p) => p.tipoProspecto === "proveedor").length,
   };
 
-  // Helper para mostrar servicios como string
   const formatServicios = (servicios: string[] | null) => {
     if (!servicios || servicios.length === 0) return "—";
     const map: Record<string, string> = {
@@ -176,7 +195,6 @@ const AdminProspectos = () => {
     return servicios.map(s => map[s] || s).join(", ");
   };
 
-  // Helper para icono según tipo
   const TipoIcon = ({ tipo }: { tipo: string }) => {
     switch (tipo) {
       case "general": return <User className="w-4 h-4" />;
@@ -188,14 +206,11 @@ const AdminProspectos = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div>
-              <h1 className="font-heading text-lg font-bold text-foreground">Panel Administrativo</h1>
-              <p className="text-muted-foreground text-xs font-body">Gestión de prospectos</p>
-            </div>
+          <div>
+            <h1 className="font-heading text-lg font-bold text-foreground">Panel Administrativo</h1>
+            <p className="text-muted-foreground text-xs font-body">Gestión de prospectos</p>
           </div>
           <button
             onClick={handleLogout}
@@ -208,7 +223,7 @@ const AdminProspectos = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Tarjeta de resumen */}
+        {/* Tarjetas de resumen */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-card rounded-xl p-5 border border-border">
             <div className="text-muted-foreground text-sm font-body">Total prospectos</div>
@@ -228,7 +243,7 @@ const AdminProspectos = () => {
           </div>
         </div>
 
-        {/* Pestañas (tabs) */}
+        {/* Pestañas */}
         <div className="flex flex-wrap gap-2 mb-6 border-b border-border pb-2">
           {(["todos", "general", "empresa", "proveedor"] as const).map((tipo) => (
             <button
@@ -252,7 +267,7 @@ const AdminProspectos = () => {
           ))}
         </div>
 
-        {/* Contenido principal */}
+        {/* Tabla de prospectos */}
         {loading ? (
           <div className="text-center py-20">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
@@ -295,6 +310,8 @@ const AdminProspectos = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: i * 0.03 }}
                       className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors"
+                      onClick={() => openDetailModal(prospecto)}
+                      style={{cursor:'pointer'}}
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
@@ -343,26 +360,107 @@ const AdminProspectos = () => {
                             {new Date(prospecto.fecha_creacion).toLocaleDateString("es-MX")}
                           </span>
                         </div>
-                       </td>
+                      </td>
                       {/* <td className="px-6 py-4">
                         <button
-                          onClick={() => confirmDelete(prospecto.id, prospecto.nombreCompleto)}
-                          className="text-muted-foreground hover:text-destructive transition-colors"
-                          title="Eliminar prospecto"
+                          onClick={() => openDetailModal(prospecto)}
+                          className="text-primary hover:text-primary/80 transition-colors"
+                          title="Ver detalles completos"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Eye className="w-5 h-5" />
                         </button>
-                       </td> */}
+                      </td> */}
                     </motion.tr>
                   ))}
                 </tbody>
-               </table>
+              </table>
             </div>
           </div>
         )}
       </div>
 
-      {/* Modal de confirmación de eliminación */}
+      {/* Modal de detalles completos */}
+      {showDetailModal && selectedProspecto && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-card rounded-2xl shadow-xl max-w-2xl w-full border border-border overflow-hidden"
+            style={{height:'450px', overflowY:'auto'}}
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-heading font-bold text-foreground flex items-center gap-2">
+                  <Info className="w-5 h-5 text-primary" />
+                  Detalles completos
+                </h3>
+                <button onClick={closeDetailModal} className="text-muted-foreground hover:text-foreground">
+                  ✕
+                </button>
+              </div>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-muted-foreground uppercase font-semibold">Nombre completo</label>
+                    <p className="text-foreground font-body">{selectedProspecto.nombreCompleto}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground uppercase font-semibold">Correo electrónico</label>
+                    <p className="text-foreground font-body">{selectedProspecto.correoElectronico}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground uppercase font-semibold">Teléfono</label>
+                    <p className="text-foreground font-body">{selectedProspecto.telefono}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground uppercase font-semibold">Tipo de prospecto</label>
+                    <p className="text-foreground font-body capitalize">{selectedProspecto.tipoProspecto}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground uppercase font-semibold">Fecha de registro</label>
+                    <p className="text-foreground font-body">
+                      {new Date(selectedProspecto.fecha_creacion).toLocaleString("es-MX")}
+                    </p>
+                  </div>
+                </div>
+                <div >
+                  <label className="text-xs text-muted-foreground uppercase font-semibold">Mensaje</label>
+                  <p className="text-foreground font-body bg-muted/30 p-3 rounded-lg mt-1 whitespace-pre-wrap"  style={{height:'200px', overflowY:'auto'}}>
+                    {selectedProspecto.mensaje || "—"}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground uppercase font-semibold">Servicios solicitados</label>
+                  <div className="bg-muted/30 p-3 rounded-lg mt-1">
+                    {selectedProspecto.serviciosSolicitados && selectedProspecto.serviciosSolicitados.length > 0 ? (
+                      <ul className="list-disc list-inside space-y-1">
+                        {selectedProspecto.serviciosSolicitados.map((serv, idx) => (
+                          <li key={idx} className="text-foreground font-body">
+                            {formatServicios([serv])} {/* Mapeo individual */}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-muted-foreground">—</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end mt-6">
+                <button
+                  onClick={closeDetailModal}
+                  className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-body text-sm"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Modal de eliminación (sin cambios) */}
       {showDeleteModal && prospectoToDelete && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <motion.div

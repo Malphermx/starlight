@@ -4,9 +4,16 @@ import { useEffect, useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play } from "lucide-react"
 // import { LeadModal } from "@/components/LeadModal";
-import oficinas from "@/assets/oficinas.jpg"
-import ambulancia from "@/assets/hero_ambulancia.png"
+// Ya no necesitas la imagen de oficinas
+// import oficinas from "@/assets/oficinas.jpg"
+// import ambulancia from "@/assets/hero_ambulancia.png"
+import doctor_hero from "@/assets/doctor_hero.png"
 import { ModalRegistro } from "./ModalRegistro"
+// import { motion } from "framer-motion";
+
+// Importa el video (ajusta la ruta según donde guardes tu archivo)
+// Puedes usar un video de la carpeta public o assets
+import fondoVideo from "@/assets/video/Loop-VideoStarlight-Website.mp4" // <-- Cambia por la ruta de tu video
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false)
@@ -38,23 +45,31 @@ export function Hero() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{
-        backgroundImage: `url('${oficinas}')`,
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
     >
-      {/* Degradado blanco superpuesto */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 pointer-events-none z-0" />
+      {/* Video de fondo */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        poster="/path-to-poster-image.jpg" // Opcional: imagen mientras carga
+      >
+        <source src={fondoVideo} type="video/mp4" />
+        {/* Fallback en caso de que el navegador no soporte video */}
+        Tu navegador no soporta videos.
+      </video>
+
+      {/* Degradado blanco superpuesto (ahora sobre el video) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/70 to-white/50 pointer-events-none z-10" />
 
       {/* Diagonal accent lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
         <div className="absolute w-[200%] h-1 bg-gradient-to-r from-transparent via-primary to-transparent -rotate-12 top-1/3 -left-1/4 opacity-40" />
         <div className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent -rotate-12 top-2/3 -left-1/4 opacity-30" />
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 py-32">
+      <div className="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-10 py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div className="space-y-7">
@@ -76,8 +91,7 @@ export function Hero() {
               className={`text-lg md:text-xl  max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
             >
-              Soluciones médicas integrales a tu alcance. Desde atención domiciliaria
-              hasta traslados de emergencia, estamos cuando más nos necesitas.
+              Soluciones médicas integrales al alcance de tu mano. Desde atención domiciliaria hasta traslados de emergencia, estamos contigo cuando más lo necesitas.
             </p>
 
             {/* CTAs */}
@@ -123,9 +137,9 @@ export function Hero() {
               }`}
           >
             {/* Main Image Card */}
-            <div className="absolute top-12 right-12 w-[500px] h-[450px] overflow-hidden bg-card">
+            <div className="absolute top-12 right-12 overflow-hidden">
               <img
-                src={ambulancia}
+                src={doctor_hero}
                 alt="Equipo médico"
                 className="w-full h-full object-cover rounded-2xl"
               />
@@ -133,7 +147,7 @@ export function Hero() {
             </div>
 
             {/* Floating Badge 1 */}
-            <div className="absolute top-0 left-0 bg-card border border-border p-6 animate-float rounded-2xl">
+            <div className="absolute card-hero bg-card border border-border p-6 animate-float rounded-2xl">
               <div className="text-4xl font-black text-primary">+10</div>
               <div className="text-sm text-muted-foreground">Años de experiencia</div>
             </div>
@@ -145,6 +159,15 @@ export function Hero() {
             >
               <div className="text-sm font-bold uppercase tracking-wider">Atención</div>
               <div className="text-2xl font-black">24/7</div>
+            </div>
+
+            {/* Floating Badge 3 */}
+            <div
+              className="absolute card-hero1 bg-blue text-primary-foreground p-6 rounded-2xl"
+              style={{ animationDelay: "2s" }}
+            >
+              <div className="text-sm font-bold uppercase tracking-wider">Cobertura</div>
+              <div className="text-2xl font-black">servicios a nivel nacional</div>
             </div>
 
             {/* Decorative Elements */}
@@ -159,11 +182,6 @@ export function Hero() {
         onOpenChange={setModalOpen}
         tipoProspecto={prospectType}
       />
-      {/* <LeadModal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        tipoProspecto={prospectType}
-      /> */}
     </section>
   )
 }

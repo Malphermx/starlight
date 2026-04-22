@@ -1,9 +1,10 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Lock, LogIn } from "lucide-react";
-import logoEnergia from "@/assets/logo-energiapuramx.jpg";
+import { CircleArrowLeft, LogIn } from "lucide-react";
+import logo from "@/assets/logo_Starlight-01.png";
 import { urlBack } from "@/hooks/url_enpoint"; // Sin extensión .js
+
 
 // Tipos
 interface LoginData {
@@ -101,15 +102,21 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md w-full bg-card rounded-2xl p-8 border border-border shadow-card-hover"
       >
-        <div className="text-center mb-8">
-          {/* <img
-            src={logoEnergia}
+        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4" style={{cursor:'pointer'}} onClick={()=>{
+          navigate("/")
+        }}>
+          <CircleArrowLeft className="w-6 h-6 text-primary" />
+          {/* <CircleArrowLeft /> */}
+        </div>
+
+        <div className="text-center mb-8" style={{marginTop:"-50px"}}>
+
+          <img
+            src={logo}
             alt="Energía PURAmx"
             className="h-16 w-auto mx-auto mb-4"
-          /> */}
-          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-6 h-6 text-primary" />
-          </div>
+          />
+
           <h1 className="font-heading text-2xl font-bold text-foreground">
             Panel Administrativo
           </h1>
@@ -121,7 +128,7 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-heading font-semibold text-foreground mb-2">
-              Usuario 
+              Usuario
             </label>
             <input
               type="text"

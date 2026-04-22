@@ -8,6 +8,7 @@ import ambulence from "@/assets/Amb.jpg"
 import rehab from "@/assets/rehab.jpg"
 import farm from "@/assets/farm.jpg"
 import domicilio from "@/assets/domicilio.jpeg"
+import { ModalRegistro } from "./ModalRegistro";
 
 const services = [
   {
@@ -23,10 +24,10 @@ const services = [
       "Traslados de emergencia 24/7 en CDMX, Estado de México, Querétaro, Hidalgo y Morelos.",
   },
   {
-    image: farm,
-    title: "Farmacia Especializada",
+    image: "/images/service-nursing.jpg",
+    title: "Enfermería",
     description:
-      "Medicamentos de alta especialidad, inmunológicos, reumatológicos y vacunas con entrega nacional.",
+      "Auxiliares, enfermeras generales y especialistas para cuidados continuos.",
   },
   {
     image: rehab,
@@ -34,12 +35,33 @@ const services = [
     description:
       "Terapia física, pulmonar, ocupacional, de deglución, neurológica y de lenguaje.",
   },
-  {
-    image: "/images/service-nursing.jpg",
-    title: "Enfermería",
-    description:
-      "Auxiliares, enfermeras generales y especialistas para cuidados continuos.",
-  },
+  // {
+  //   image: "/images/service-oxygen.jpg",
+  //   title: "Oxígeno y Ventilación",
+  //   description:
+  //     "Equipos de oxigenoterapia y ventilación mecánica para pacientes que lo requieran.",
+  // },
+  // {
+  //   image: farm,
+  //   title: "Farmacia Especializada",
+  //   description:
+  //     "Medicamentos de alta especialidad, inmunológicos, reumatológicos y vacunas con entrega nacional.",
+  // },
+  // {
+  //   image: "/images/service-supplies.jpg",
+  //   title: "Material de Curación",
+  //   description:
+  //     "Suministros médicos, material de curación e implantes con disponibilidad inmediata.",
+  // },
+  // {
+  //   image: "/images/service-equipment.jpg",
+  //   title: "Equipo Médico",
+  //   description:
+  //     "Renta y venta de camas hospitalarias, sillas de ruedas, marcos ortopédicos y más.",
+  // },
+
+];
+const services2 = [
   {
     image: "/images/service-oxygen.jpg",
     title: "Oxígeno y Ventilación",
@@ -47,10 +69,10 @@ const services = [
       "Equipos de oxigenoterapia y ventilación mecánica para pacientes que lo requieran.",
   },
   {
-    image: "/images/service-equipment.jpg",
-    title: "Equipo Médico",
+    image: farm,
+    title: "Farmacia Corporativa",
     description:
-      "Renta y venta de camas hospitalarias, sillas de ruedas, marcos ortopédicos y más.",
+      "Medicamentos de alta especialidad, inmunológicos, reumatológicos y vacunas con entrega nacional.",
   },
   {
     image: "/images/service-supplies.jpg",
@@ -58,12 +80,20 @@ const services = [
     description:
       "Suministros médicos, material de curación e implantes con disponibilidad inmediata.",
   },
+  {
+    image: "/images/service-equipment.jpg",
+    title: "Equipo Médico",
+    description:
+      "Renta y venta de camas hospitalarias, sillas de ruedas, marcos ortopédicos y más.",
+  },
+
 ];
 
 export function Services1() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -107,22 +137,23 @@ export function Services1() {
             Servicios Integrales para tu Salud
           </h2>
           <p className="text-white/70 text-lg text-pretty max-w-2xl mx-auto">
-            Contamos con una amplia gama de servicios médicos diseñados para cubrir todas tus necesidades de salud
+            Ofrecemos una amplia gama de servicios médicos, diseñados para atender de manera integral todas tus necesidades de salud.
           </p>
         </div>
 
         {/* Contenedor principal con ancho responsivo */}
         <div className="w-full md:w-4/5 mx-auto px-4 py-8 lg:py-16">
           {/* Layout dos columnas */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2   items-start">
             {/* Columna izquierda: Video vertical */}
             <div
               className={cn(
                 "transition-all duration-700 delay-200",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}
+            // style={{border:'1px solid red'}}
             >
-              <div className="relative aspect-[9/16] max-h-[700px] mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+              <div className="relative aspect-[9/16] max-h-[600px] mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
                 <video
                   src={video}
                   autoPlay
@@ -200,6 +231,68 @@ export function Services1() {
             </div>
           </div>
 
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 pt-10">
+            {services2.map((service, index) => {
+              const isActive = activeIndex === index;
+              return (
+                <div
+                  key={index}
+                  className={cn(
+                    "group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 h-full",
+                    isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-10",
+                  )}
+                  style={{ transitionDelay: `${index * 75}ms` }}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onMouseLeave={() => setActiveIndex(null)}
+                >
+                  {/* Imagen de fondo */}
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+
+                  {/* Overlay degradado */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
+
+                  {/* Contenido textual */}
+                  <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-white/80 text-sm leading-relaxed line-clamp-3 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  {/* Flecha indicadora en hover */}
+                  <div
+                    className={cn(
+                      "absolute top-4 right-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center transition-all duration-300",
+                      isActive ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                    )}
+                  >
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
           {/* CTA debajo de ambas columnas */}
           <div
             className={cn(
@@ -210,10 +303,20 @@ export function Services1() {
             <Button
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
+              onClick={()=>{
+                setModalOpen(true)
+              }}
             >
               Solicitar Información
             </Button>
           </div>
+
+
+          <ModalRegistro
+            open={modalOpen}
+            onOpenChange={setModalOpen}
+            tipoProspecto={"general"}
+          />
         </div>
       </div>
     </section>

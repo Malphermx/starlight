@@ -17,7 +17,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2 } from "lucide-react"
 import { urlBack } from "@/hooks/url_enpoint";
 
-
 interface LeadModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -34,6 +33,28 @@ const serviciosDisponibles = [
   { id: "equipo", label: "Equipo médico y material de curación" },
 ]
 
+// Constantes de validación
+const MAX_LENGTH_NAME_EMAIL_PHONE = 100
+const MAX_LENGTH_MESSAGE = 1000
+
+// Función para eliminar emojis y truncar texto (para nombre y mensaje)
+const sanitizeInput = (value: string, maxLength: number): string => {
+  const withoutEmojis = value.replace(/[\p{Emoji}]/gu, '')
+  return withoutEmojis.slice(0, maxLength)
+}
+
+// Función específica para correo: solo elimina emojis, permite números y todo lo demás
+const sanitizeEmail = (value: string, maxLength: number): string => {
+  const withoutEmojis = value.replace(/[^a-zA-Z0-9@._-]/g, '')
+  return withoutEmojis.slice(0, maxLength)
+}
+
+// Función específica para el teléfono: solo números
+const sanitizePhone = (value: string, maxLength: number): string => {
+  const onlyNumbers = value.replace(/\D/g, '')
+  return onlyNumbers.slice(0, maxLength)
+}
+
 export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }: LeadModalProps) {
   const [formData, setFormData] = useState({
     nombreCompleto: "",
@@ -48,7 +69,19 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    let sanitizedValue = value
+
+    if (name === "mensaje") {
+      sanitizedValue = sanitizeInput(value, MAX_LENGTH_MESSAGE)
+    } else if (name === "telefono") {
+      sanitizedValue = sanitizePhone(value, MAX_LENGTH_NAME_EMAIL_PHONE)
+    } else if (name === "correoElectronico") {
+      sanitizedValue = sanitizeEmail(value, MAX_LENGTH_NAME_EMAIL_PHONE)
+    } else if (name === "nombreCompleto") {
+      sanitizedValue = sanitizeInput(value, MAX_LENGTH_NAME_EMAIL_PHONE)
+    }
+
+    setFormData(prev => ({ ...prev, [name]: sanitizedValue }))
     setError(null)
   }
 
@@ -71,6 +104,7 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
       setError("El correo electrónico es obligatorio")
       return false
     }
+    // Expresión regular que permite letras, números, puntos, guiones, etc.
     const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/
     if (!emailRegex.test(formData.correoElectronico)) {
       setError("Correo electrónico inválido")
@@ -78,6 +112,10 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
     }
     if (!formData.telefono.trim()) {
       setError("El teléfono es obligatorio")
+      return false
+    }
+    if (!/^\d+$/.test(formData.telefono)) {
+      setError("El teléfono solo puede contener números")
       return false
     }
     if (tipoProspecto === "general" && formData.serviciosSolicitados.length === 0) {
@@ -113,12 +151,10 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
       const data = await response.json()
       console.log(data.error, "response.ok")
       if (data?.error) {
-      
         throw new Error(data.error || "Error al registrar")
       }
 
       setSuccess(true)
-      // Reset form después de 2 segundos y cerrar modal
       setTimeout(() => {
         setFormData({
           nombreCompleto: "",
@@ -137,7 +173,6 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
     }
   }
 
-  // Determinar título y descripción según tipo
   const getTitle = () => {
     switch (tipoProspecto) {
       case "general":
@@ -186,6 +221,7 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
                 onChange={handleInputChange}
                 placeholder="Ej: Juan Pérez"
                 disabled={isSubmitting}
+                maxLength={MAX_LENGTH_NAME_EMAIL_PHONE}
                 required
               />
             </div>
@@ -200,6 +236,7 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
                 onChange={handleInputChange}
                 placeholder="ejemplo@dominio.com"
                 disabled={isSubmitting}
+                maxLength={MAX_LENGTH_NAME_EMAIL_PHONE}
                 required
               />
             </div>
@@ -213,6 +250,7 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
                 onChange={handleInputChange}
                 placeholder="Ej: 5551234567"
                 disabled={isSubmitting}
+                maxLength={MAX_LENGTH_NAME_EMAIL_PHONE}
                 required
               />
             </div>
@@ -227,6 +265,7 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
                 placeholder="Escriba su mensaje aquí..."
                 rows={3}
                 disabled={isSubmitting}
+                maxLength={MAX_LENGTH_MESSAGE}
               />
             </div>
 
