@@ -153,7 +153,7 @@ export function Services1() {
               )}
             // style={{border:'1px solid red'}}
             >
-              <div className="relative aspect-[9/16] max-h-[600px] mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+              <div className="relative aspect-[9/16] max-h-[600px] mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 my-5">
                 <video
                   src={video}
                   autoPlay
