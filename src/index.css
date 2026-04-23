@@ -196,8 +196,10 @@
   background-color: white;
 }
 .border-green:hover{
-  border: 1px solid #2C9653;
+  /* border: 1px solid #2C9653;
   background-color: #2C9653;
+  color: white; */
+  background-color: rgba(2, 130, 196,1);
   color: white;
 }
 .bg-blue{
@@ -229,6 +231,16 @@
 .w-why-80{
   width: 80%;
 }
+.bg-yellow{
+  background-color: rgba(2, 130, 196,1);
+  color: white;
+}
+.bg-yellow:hover{
+  border: 1px solid rgba(2, 130, 196,1);
+  background-color: white !important;
+  color: rgba(2, 130, 196,1);
+}
+
 @media (max-width: 992px) {
    .md-none{
     display: none;

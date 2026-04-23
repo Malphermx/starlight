@@ -6,7 +6,8 @@ import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react"
 import ambulence from "@/assets/Amb.jpg"
 import rehab from "@/assets/rehab.jpg"
 import oficinas from "@/assets/oficinas.jpg"
-import personal from "@/assets/personal.jpeg"
+// import personal from "@/assets/personal.jpeg"
+import personal from "@/assets/equipo_medico.jpeg"
 import atencion_domicilio from "@/assets/atencion_domicilio.jpeg"
 import centro_rehab from "@/assets/centro_rehab.jpeg"
 import consultas from "@/assets/consultas.jpeg"
@@ -16,7 +17,7 @@ const galleryImages = [
   { src: ambulence, title: "Ambulancias de Emergencia", category: "Urgencias" },
   { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
   { src: equipomedico, title: "Equipo Médico", category: "Equipamiento" },
-  { src: "/images/pharmacy.jpg", title: "Farmacia Corporativa", category: "Farmacia" },
+  { src: "/images/pharmacy.jpg", title: "Farmacias Corporativas", category: "Farmacia" },
   { src: rehab, title: "Rehabilitación", category: "Terapias" },
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },
   { src: personal, title: "Equipo", category: "Empresas" },

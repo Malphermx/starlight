@@ -61,7 +61,8 @@ export function Hero() {
       </video>
 
       {/* Degradado blanco superpuesto (ahora sobre el video) */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/70 to-white/50 pointer-events-none z-10" />
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/70 to-white/50 pointer-events-none z-10" /> */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/55 via-primary/60 to-secondary/85" />
 
       {/* Diagonal accent lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
@@ -79,10 +80,10 @@ export function Hero() {
                 }`}
             >
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight text-balance">
-                <span className="text-foreground">CUIDAMOS</span>
+                <span className="text-white">CUIDAMOS</span>
                 <br />
-                <span className="text-foreground">TU</span>{" "}
-                <span className="text-primary">SALUD</span>
+                <span className="text-white">TU</span>{" "}
+                <span className="text-yellow" style={{color:'rgba(253, 235, 26,1)'}}>SALUD</span>
               </h1>
             </div>
 
@@ -90,6 +91,7 @@ export function Hero() {
             <p
               className={`text-lg md:text-xl  max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
+                style={{color:'white'}}
             >
               Soluciones médicas integrales al alcance de tu mano. Desde atención domiciliaria hasta traslados de emergencia, estamos contigo cuando más lo necesitas.
             </p>
@@ -101,7 +103,7 @@ export function Hero() {
             >
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 text-base font-bold px-8 h-14 gap-2 group"
+                className="bg-yellow text-primary-foreground text-base font-bold px-8 h-14 gap-2 group"
                 onClick={() => openModalWithType("general")}
               >
                 Solicitar Atención

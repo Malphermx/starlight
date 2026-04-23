@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import video from '@/video/IMG_4774.mp4';
-import ambulence from "@/assets/Amb.jpg"
+// import ambulence from "@/assets/Amb.jpg"
+import ambulence from "@/assets/servicios_medicos.jpg"
 import rehab from "@/assets/rehab.jpg"
 // import farm from "@/assets/farm.jpg"
 import farm from "@/assets/farmacia.jpg"
@@ -22,7 +23,7 @@ const allServices = [
   },
   {
     image: ambulence,
-    title: "Ambulancias y Urgencias",
+    title: "Servicios de Ambulancias",
     description: "Traslados de emergencia 24/7 en CDMX, Estado de México, Querétaro, Hidalgo y Morelos.",
   },
   {
@@ -37,22 +38,23 @@ const allServices = [
   },
   {
     image: "/images/service-oxygen.jpg",
-    title: "Oxígeno y Ventilación",
+    title: "Oxigenoterapia",
     description: "Equipos de oxigenoterapia y ventilación mecánica para pacientes que lo requieran.",
   },
   {
     image: farm,
-    title: "Farmacia Corporativa",
+    title: "Farmacias Corporativas",
     description: "Medicamentos de alta especialidad, inmunológicos, reumatológicos y vacunas con entrega nacional.",
   },
   {
     image:curacion,
+    // title: "Material de Curación",
     title: "Material de Curación",
     description: "Suministros médicos, material de curación e implantes con disponibilidad inmediata.",
   },
   {
     image: equipomedico,
-    title: "Equipo Médico",
+    title: "Venta y Renta de Equipo Médico",
     description: "Renta y venta de camas hospitalarias, sillas de ruedas, marcos ortopédicos y más.",
   },
 ];

@@ -44,7 +44,7 @@ const allServices = [
   },
   {
     image: farm,
-    title: "Farmacia Corporativa",
+    title: "Farmacias Corporativas",
     description:
       "Medicamentos de alta especialidad, inmunológicos, reumatológicos y vacunas con entrega nacional.",
   },
