@@ -183,69 +183,112 @@
   animation: gentleFloat 4s infinite ease-in-out;
 }
 
-.ctaIni:hover{
+.ctaIni:hover {
   background-color: rgb(97, 209, 138);
   color: white;
   cursor: pointer;
 }
-.border-top-green{
+
+.border-top-green {
   border-top: 2px solid #2C9653;
 }
-.border-green{
+
+.border-green {
   border: 1px solid #2C9653;
   background-color: white;
 }
-.border-green:hover{
+
+.border-green:hover {
   /* border: 1px solid #2C9653;
   background-color: #2C9653;
   color: white; */
-  background-color: rgba(2, 130, 196,1);
+  background-color: rgba(2, 130, 196, 1);
   color: white;
 }
-.bg-blue{
+
+.bg-blue {
   background: #2A7B9B;
 }
-.card-hero{
+
+.card-hero {
   top: 100px;
   left: 0px;
 }
-.card-hero1{
+
+.card-hero1 {
   bottom: 0px;
   right: 0px;
 }
-.text-green{
+
+.text-green {
   color: #2C9653;
 }
-.text-blue{
+
+.text-blue {
   color: #171a1d;
 }
-.card-centro{
-  background-color: rgba(255, 255, 255,0.9);
+
+.card-centro {
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   margin-top: 40px;
   height: auto;
 }
-.width-why{
+
+.width-why {
   width: 80%;
-}
-.w-why-80{
-  width: 80%;
-}
-.bg-yellow{
-  background-color: rgba(2, 130, 196,1);
-  color: white;
-}
-.bg-yellow:hover{
-  border: 1px solid rgba(2, 130, 196,1);
-  background-color: white !important;
-  color: rgba(2, 130, 196,1);
 }
 
-@media (max-width: 992px) {
-   .md-none{
-    display: none;
-   }
-   .w-why-80{
-    width: 100%;
-   }
+.w-why-80 {
+  width: 80%;
 }
+
+.bg-yellow {
+  background-color: rgba(2, 130, 196, 1);
+  color: white;
+}
+
+.bg-yellow:hover {
+  border: 1px solid rgba(2, 130, 196, 1);
+  background-color: white !important;
+  color: rgba(2, 130, 196, 1);
+}
+
+/* .hero-responsive {
+  width: 100%;
+} */
+
+@media (max-width: 992px) {
+  .md-none {
+    display: none;
+  }
+
+  .w-why-80 {
+    width: 100%;
+  }
+}
+/* 
+@media (max-width: 800px) {
+  .hero-responsive {
+    width: 80%;
+    margin-top: 100px;
+    text-align: center;
+
+  }
+}
+@media (max-width: 650px) {
+  .hero-responsive {
+    width: 60%;
+   
+  }
+}
+@media (max-width: 500px) {
+  .hero-responsive {
+  
+  }
+} */
+@media (max-width: 400px) {
+  .flex-\[0_0_50\%\]{
+    flex: row;
+  }
+} 
