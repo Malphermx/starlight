@@ -275,6 +275,7 @@ export function Services1() {
                       opacity: opacity,
                       zIndex: zIndex,
                       transitionProperty: "transform, opacity, z-index",
+                     
                     }}
                   >
                     <div
@@ -283,6 +284,7 @@ export function Services1() {
                         "w-[220px] sm:w-[260px] md:w-[280px]",
                         isCenter && "ring-2 ring-primary shadow-2xl"
                       )}
+                      
                     >
                       <div className="aspect-[4/3] overflow-hidden">
                         <img
@@ -291,7 +293,7 @@ export function Services1() {
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                       </div>
-                      <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent">
+                      <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent" style={{ height:'220px'}}>
                         <h3
                           className={cn(
                             "font-bold text-green mb-1 transition-all",

@@ -170,7 +170,7 @@ export function Hero() {
             </div>
 
             {/* Mobile Carousel (reemplaza los botones secundarios) */}
-            <div className="lg:hidden  mt-6 border w-full">
+            <div className="lg:hidden  mt-6  w-full">
               <div className=" w-full">
                 <h1 className="mt-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] md:leading-[0.9] tracking-tight text-balance">
                   <span className="text-white">CUIDAMOS</span>
