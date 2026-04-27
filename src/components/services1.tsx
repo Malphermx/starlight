@@ -293,7 +293,7 @@ export function Services1() {
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                       </div>
-                      <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent" style={{ height:'220px'}}>
+                      <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent" style={isCenter?{ height:'220px'}:null}>
                         <h3
                           className={cn(
                             "font-bold text-green mb-1 transition-all",
