@@ -267,6 +267,9 @@
     width: 100%;
   }
 }
+.w-mobile-50{
+  width: 50%;
+}
 /* 
 @media (max-width: 800px) {
   .hero-responsive {
@@ -287,8 +290,16 @@
   
   }
 } */
+@media (max-width: 500px) {
+  .w-mobile-50{
+    width: 40%;
+  }
+}
 @media (max-width: 400px) {
   .flex-\[0_0_50\%\]{
     flex: row;
+  }
+  .w-mobile-50{
+    width: 35%;
   }
 } 

@@ -170,24 +170,26 @@ export function Hero() {
             </div>
 
             {/* Mobile Carousel (reemplaza los botones secundarios) */}
-            <div className="lg:hidden  mt-6  w-full">
-              <div className=" w-full">
-                <h1 className="mt-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] md:leading-[0.9] tracking-tight text-balance">
-                  <span className="text-white">CUIDAMOS</span>
-                  <br />
-                  <span className="text-white">TU</span>{" "}
-                  <span className="text-yellow" style={{ color: "rgba(253, 235, 26,1)" }}>
-                    SALUD
-                  </span>
-                </h1>
-                <p
-                  className={`my-3 text-base md:text-lg lg:text-xl max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                    }`}
-                  style={{ color: "white" }}
-                >
-                  Soluciones médicas integrales al alcance de tu mano. Desde atención domiciliaria hasta traslados de
-                  emergencia, estamos contigo cuando más lo necesitas.
-                </p>
+            <div className="lg:hidden w-full" style={{ marginTop: '100px' }}>
+              <div className="w-full">
+                <div className="w-mobile-50">
+                  <h1 className="mt-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] md:leading-[0.9] tracking-tight text-balance">
+                    <span className="text-white">CUIDAMOS</span>
+                    <br />
+                    <span className="text-white">TU</span>{" "}
+                    <span className="text-yellow" style={{ color: "rgba(253, 235, 26,1)" }}>
+                      SALUD
+                    </span>
+                  </h1>
+                  <p
+                    className={`my-3 text-base md:text-lg lg:text-xl max-w-lg leading-relaxed transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                      }`}
+                    style={{ color: "white" }}
+                  >
+                    Soluciones médicas integrales al alcance de tu mano. Desde atención domiciliaria hasta traslados de
+                    emergencia, estamos contigo cuando más lo necesitas.
+                  </p>
+                </div>
                 <div className="overflow-hidden" ref={emblaRef}>
 
                   <div className="flex">
