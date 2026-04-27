@@ -1,7 +1,7 @@
 // components/LeadModal.tsx
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -194,6 +194,20 @@ export function ModalRegistro({ open, onOpenChange, tipoProspecto = "general" }:
         return "Regístrese para formar parte de nuestra red de proveedores de servicios médicos y equipamiento."
     }
   }
+
+  useEffect(() => {
+    // console.log(open)
+    if (open === false) {
+      setFormData({
+        nombreCompleto: "",
+        correoElectronico: "",
+        telefono: "",
+        mensaje: "",
+        serviciosSolicitados: [],
+      })
+    }
+  }, [open])
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
