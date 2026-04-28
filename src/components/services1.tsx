@@ -11,72 +11,62 @@ import domicilio from "@/assets/domicilio.jpeg";
 import equipomedico from "@/assets/equipomedico.jpg";
 import { ModalRegistro } from "./ModalRegistro";
 
-// Todos los servicios (8 en total)
+// Todos los servicios con título y descripción corta
 const allServices = [
   {
     image: domicilio,
     title: "Atención Médica a Domicilio",
-    description:
-      "Médicos generales y especialistas que te visitan en casa. Consultas, diagnósticos y seguimiento personalizado.",
+    description: "Médicos generales y especialistas que te visitan en casa.",
   },
   {
     image: ambulence,
     title: "Servicios de Ambulancias",
-    description:
-      "Traslados de emergencia 24/7 en CDMX, Estado de México, Querétaro, Hidalgo y Morelos.",
+    description: "Traslados de emergencia 24/7 en CDMX y área metropolitana.",
   },
   {
     image: "/images/service-nursing.jpg",
     title: "Enfermería",
-    description:
-      "Auxiliares, enfermeras generales y especialistas para cuidados continuos.",
+    description: "Auxiliares y enfermeras especialistas para cuidados continuos.",
   },
   {
     image: rehab,
     title: "Rehabilitación",
-    description:
-      "Terapia física, pulmonar, ocupacional, de deglución, neurológica y de lenguaje.",
+    description: "Terapia física, ocupacional, neurológica y de lenguaje.",
   },
   {
     image: "/images/service-oxygen.jpg",
     title: "Oxigenoterapia",
-    description:
-      "Equipos de oxigenoterapia y ventilación mecánica para pacientes que lo requieran.",
+    description: "Equipos de oxigenoterapia y ventilación mecánica a domicilio.",
   },
   {
     image: farm,
     title: "Farmacias Corporativas",
-    description:
-      "Medicamentos de alta especialidad, inmunológicos, reumatológicos y vacunas con entrega nacional.",
+    description: "Medicamentos de alta especialidad con entrega nacional.",
   },
   {
     image: curacion,
     title: "Material de Curación",
-    description:
-      "Suministros médicos, material de curación e implantes con disponibilidad inmediata.",
+    description: "Suministros médicos e implantes con disponibilidad inmediata.",
   },
   {
     image: equipomedico,
     title: "Venta y Renta de Equipo Médico",
-    description:
-      "Renta y venta de camas hospitalarias, sillas de ruedas, marcos ortopédicos y más.",
+    description: "Camas hospitalarias, sillas de ruedas y más.",
   },
 ];
 
 export function Services1() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null); // Referencia para el contenedor del carrusel
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<typeof allServices[0] | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(5); // desktop por defecto
+  const totalServices = allServices.length;
 
   // Estado para el swipe táctil
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
-  const minSwipeDistance = 50; // distancia mínima en píxeles para considerar un swipe
-
-  const totalServices = allServices.length;
+  const minSwipeDistance = 50;
 
   // Observador de entrada para animaciones
   useEffect(() => {
@@ -90,24 +80,6 @@ export function Services1() {
     return () => observer.disconnect();
   }, []);
 
-  // Ajustar cantidad de elementos visibles según el ancho de pantalla
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width >= 1024) {
-        setVisibleCount(5);
-      } else if (width >= 768) {
-        setVisibleCount(3);
-      } else {
-        setVisibleCount(1);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Navegación del carrusel
   const goPrev = () => {
     setCurrentIndex((prev) => (prev - 1 + totalServices) % totalServices);
   };
@@ -116,97 +88,64 @@ export function Services1() {
     setCurrentIndex((prev) => (prev + 1) % totalServices);
   };
 
-  // Calcula los índices a mostrar en el carrusel, con el índice actual en el centro (o cerca)
-  const getVisibleIndices = (): number[] => {
-    const indices: number[] = [];
-    const half = Math.floor(visibleCount / 2);
-    let start = currentIndex - half;
-
-    for (let i = 0; i < visibleCount; i++) {
-      let idx = (start + i) % totalServices;
-      if (idx < 0) idx += totalServices;
-      indices.push(idx);
-    }
-    return indices;
-  };
-
-  const visibleIndices = getVisibleIndices();
-  const centerPosition = Math.floor(visibleCount / 2);
-
-  // --- Manejadores de swipe táctil ---
+  // Manejadores de swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStartX(e.targetTouches[0].clientX);
-    setTouchEndX(null); // reiniciar valor final
+    setTouchEndX(null);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    // Guardamos la posición actual continuamente mientras se desliza
     setTouchEndX(e.targetTouches[0].clientX);
   };
 
   const handleTouchEnd = () => {
     if (touchStartX === null || touchEndX === null) return;
-
     const distance = touchEndX - touchStartX;
-    const absDistance = Math.abs(distance);
-
-    // Solo navegar si el desplazamiento supera el umbral mínimo
-    if (absDistance >= minSwipeDistance) {
-      if (distance > 0) {
-        // Deslizar hacia la derecha -> ir al anterior
-        goPrev();
-      } else {
-        // Deslizar hacia la izquierda -> ir al siguiente
-        goNext();
-      }
+    if (Math.abs(distance) >= minSwipeDistance) {
+      if (distance > 0) goPrev();
+      else goNext();
     }
-
-    // Reiniciar valores
     setTouchStartX(null);
     setTouchEndX(null);
   };
-  // ---------------------------------
+
+  const handleOpenModal = (service: typeof allServices[0]) => {
+    setSelectedService(service);
+    setModalOpen(true);
+  };
+
+  const currentService = allServices[currentIndex];
 
   return (
     <section
       id="servicios"
       ref={sectionRef}
-      className="relative overflow-hidden bg-gray-900"
+      className="relative overflow-hidden bg-gray-900 border"
+      style={{ paddingTop: "50px" }}
     >
       {/* Fondo */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/medical-equipment.jpg')" }}
       />
-      <div className="absolute inset-0 bg-black/85" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/85" />
 
       <div className="relative z-10">
-        {/* Header */}
+        {/* Header vacío (opcional, ya no se usa) */}
         <div
           className={cn(
-            "text-center max-w-3xl mx-auto pt-20 pb-8 px-4 transition-all duration-1000",
+            "text-center max-w-3xl mx-auto pt-10 pb-8 px-4 transition-all duration-1000",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
-        >
-          <span className="inline-block text-primary-foreground/80 font-semibold text-sm uppercase tracking-wider mb-4 bg-primary/20 px-4 py-1 rounded-full">
-            Nuestros Servicios
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 text-balance">
-            Servicios Integrales para tu Salud
-          </h2>
-          <p className="text-white/70 text-lg text-pretty max-w-2xl mx-auto">
-            Ofrecemos una amplia gama de servicios médicos, diseñados para
-            atender de manera integral todas tus necesidades de salud.
-          </p>
-        </div>
+        />
 
-        {/* Carrusel */}
-        <div className="w-full md:w-4/5 mx-auto px-4 py-8 lg:py-16">
+        {/* Carrusel tradicional con contenido sobre la imagen */}
+        <div className="w-full px-4 md:px-0 py-5">
           <div className="relative flex items-center justify-center">
             {/* Botón anterior */}
             <button
               onClick={goPrev}
-              className="absolute left-0 z-20 p-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 -translate-x-2 lg:-translate-x-6"
+              className="absolute left-2 md:left-4 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
               aria-label="Anterior servicio"
             >
               <svg
@@ -224,105 +163,47 @@ export function Services1() {
               </svg>
             </button>
 
-            {/* Contenedor de tarjetas - con soporte táctil y touch-action para permitir scroll vertical */}
+            {/* Contenedor de la imagen actual con dimensiones responsive */}
             <div
-              ref={carouselRef}
-              className="flex justify-center items-center gap-3 md:gap-5 overflow-visible touch-pan-y"
+              className="relative w-full md:w-4/5 mx-auto overflow-hidden rounded-2xl shadow-2xl"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              {visibleIndices.map((serviceIdx, position) => {
-                const service = allServices[serviceIdx];
-                const isCenter = position === centerPosition;
-                const distanceFromCenter = Math.abs(position - centerPosition);
-                // Escala dinámica: el centro es más grande
-                let scale = 1;
-                let opacity = 1;
-                let zIndex = 10;
-                if (visibleCount === 1) {
-                  scale = 1.1;
-                } else if (visibleCount === 3) {
-                  if (distanceFromCenter === 0) {
-                    scale = 1.2;
-                    zIndex = 20;
-                  } else {
-                    scale = 0.85;
-                    opacity = 0.8;
-                    zIndex = 5;
-                  }
-                } else if (visibleCount === 5) {
-                  if (distanceFromCenter === 0) {
-                    scale = 1.2;
-                    zIndex = 20;
-                  } else if (distanceFromCenter === 1) {
-                    scale = 0.9;
-                    zIndex = 15;
-                    opacity = 0.9;
-                  } else {
-                    scale = 0.7;
-                    opacity = 0.6;
-                    zIndex = 5;
-                  }
-                }
+              {/* Imagen de fondo */}
+              <div className="w-full h-[600px] md:h-[400px]">
+                <img
+                  src={currentService.image}
+                  alt={currentService.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-                return (
-                  <div
-                    key={`service-${serviceIdx}-${position}`}
-                    className="transition-all duration-500 ease-out cursor-pointer mx-2"
-                    style={{
-                      transform: `scale(${scale})`,
-                      opacity: opacity,
-                      zIndex: zIndex,
-                      transitionProperty: "transform, opacity, z-index",
-                     
-                    }}
-                  >
-                    <div
-                      className={cn(
-                        "relative rounded-2xl overflow-hidden bg-gray-800 shadow-xl",
-                        "w-[220px] sm:w-[260px] md:w-[280px]",
-                        isCenter && "ring-2 ring-primary shadow-2xl"
-                      )}
-                      
-                    >
-                      <div className="aspect-[4/3] overflow-hidden">
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      </div>
-                      <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent" style={isCenter?{ height:'220px'}:null}>
-                        <h3
-                          className={cn(
-                            "font-bold text-green mb-1 transition-all",
-                            isCenter ? "text-xl md:text-2xl" : "text-base md:text-lg"
-                          )}
-                        >
-                          {service.title}
-                        </h3>
-                        {isCenter && (
-                          <p className="text-white/80 text-sm leading-relaxed mt-2 animate-fadeIn">
-                            {service.description}
-                          </p>
-                        )}
-                        {!isCenter && (
-                          <p className="text-white/50 text-xs line-clamp-2 mt-1">
-                            {service.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {/* Degradado sutil para mejorar legibilidad */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+              {/* Contenido textual y botón */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+                <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2 drop-shadow-lg">
+                  {currentService.title}
+                </h3>
+                <p className="text-sm md:text-base text-white/90 mb-3 md:mb-4 max-w-lg drop-shadow">
+                  {currentService.description}
+                </p>
+                <Button
+                  size="default"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
+                  onClick={() => handleOpenModal(currentService)}
+                >
+                  Solicitar información
+                </Button>
+              </div>
             </div>
 
             {/* Botón siguiente */}
             <button
               onClick={goNext}
-              className="absolute right-0 z-20 p-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 translate-x-2 lg:translate-x-6"
+              className="absolute right-2 md:right-4 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
               aria-label="Siguiente servicio"
             >
               <svg
@@ -341,7 +222,7 @@ export function Services1() {
             </button>
           </div>
 
-          {/* Indicadores de posición */}
+          {/* Indicadores de posición (puntos) */}
           <div className="flex justify-center gap-2 mt-8">
             {allServices.map((_, idx) => (
               <button
@@ -357,29 +238,14 @@ export function Services1() {
               />
             ))}
           </div>
-
-          {/* CTA */}
-          <div
-            className={cn(
-              "text-center mt-12 transition-all duration-1000 delay-500",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            )}
-          >
-            <Button
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
-              onClick={() => setModalOpen(true)}
-            >
-              Solicitar Información
-            </Button>
-          </div>
-
-          <ModalRegistro
-            open={modalOpen}
-            onOpenChange={setModalOpen}
-            tipoProspecto={"general"}
-          />
         </div>
+
+        {/* Modal - ahora recibe el servicio seleccionado */}
+        <ModalRegistro
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          tipoProspecto={selectedService?.title || "general"}
+        />
       </div>
     </section>
   );

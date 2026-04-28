@@ -176,7 +176,7 @@ export function CentroRehabilitacion() {
         rotation: number;
         speed: number;
     }>>([]);
-    
+
     const scrollAnimationRef = useRef<number | null>(null);
     const isScrollingRef = useRef(false);
 
@@ -184,17 +184,17 @@ export function CentroRehabilitacion() {
     useEffect(() => {
         const colors = [
             'rgba(255, 255, 255, 0.15)',   // blanco
-            'rgba(59, 130, 246, 0.2)',     // azul
-            'rgba(16, 185, 129, 0.15)',    // verde
-            'rgba(139, 92, 246, 0.15)',    // morado
-            'rgba(245, 158, 11, 0.15)',    // ámbar
-            'rgba(239, 68, 68, 0.12)',     // rojo
-            'rgba(236, 72, 153, 0.12)',    // rosa
+            // 'rgba(59, 130, 246, 0.2)',     // azul
+            // 'rgba(16, 185, 129, 0.15)',    // verde
+            // 'rgba(139, 92, 246, 0.15)',    // morado
+            // 'rgba(245, 158, 11, 0.15)',    // ámbar
+            // 'rgba(239, 68, 68, 0.12)',     // rojo
+            // 'rgba(236, 72, 153, 0.12)',    // rosa
         ];
-        
+
         const count = 35;
         const newRhombuses = [];
-        
+
         for (let i = 0; i < count; i++) {
             // Posiciones aleatorias (porcentajes, pueden salir ligeramente fuera para efecto)
             const left = Math.random() * 110 - 10; // -10% a 100%
@@ -209,7 +209,7 @@ export function CentroRehabilitacion() {
             const rotation = 45 + Math.random() * 360;
             // Velocidad parallax: entre 0.1 y 1.2
             const speed = 0.15 + Math.random() * 1.05;
-            
+
             newRhombuses.push({
                 id: i,
                 left: `${left}%`,
@@ -221,22 +221,22 @@ export function CentroRehabilitacion() {
                 speed,
             });
         }
-        
+
         setRhombuses(newRhombuses);
     }, []);
 
     // Efecto parallax en scroll
     useEffect(() => {
         if (!sectionRef.current || rhombuses.length === 0) return;
-        
+
         const updateParallax = () => {
             if (!sectionRef.current) return;
-            
+
             const scrollY = window.scrollY;
             const sectionRect = sectionRef.current.getBoundingClientRect();
             const sectionTop = sectionRect.top + scrollY;
             const scrollDelta = scrollY - sectionTop;
-            
+
             // Aplicar transform a cada rombo
             const rhombusElements = document.querySelectorAll('.parallax-rhombus');
             rhombusElements.forEach((el, index) => {
@@ -245,10 +245,10 @@ export function CentroRehabilitacion() {
                 const yOffset = scrollDelta * speed;
                 (el as HTMLElement).style.transform = `translateY(${yOffset}px) rotate(${rotation}deg)`;
             });
-            
+
             isScrollingRef.current = false;
         };
-        
+
         const handleScroll = () => {
             if (!isScrollingRef.current) {
                 isScrollingRef.current = true;
@@ -258,11 +258,11 @@ export function CentroRehabilitacion() {
                 scrollAnimationRef.current = requestAnimationFrame(updateParallax);
             }
         };
-        
+
         window.addEventListener('scroll', handleScroll);
         // Llamada inicial para posicionar correctamente
         handleScroll();
-        
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
             if (scrollAnimationRef.current) {
@@ -291,6 +291,7 @@ export function CentroRehabilitacion() {
             id="servicios"
             ref={sectionRef}
             className="relative overflow-hidden bg-gray-900"
+            style={{paddingTop:'30px'}}
         >
             {/* Fondo con imagen */}
             <div
@@ -299,7 +300,8 @@ export function CentroRehabilitacion() {
             />
 
             {/* Overlay claro */}
-            <div className="absolute inset-0 bg-white/65" />
+            {/* <div className="absolute inset-0 bg-white/65" /> */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
             {/* Rombo de fondo con parallax */}
             <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
@@ -312,7 +314,8 @@ export function CentroRehabilitacion() {
                             top: rhombus.top,
                             width: `${rhombus.size}px`,
                             height: `${rhombus.size}px`,
-                            backgroundColor: rhombus.bgColor,
+                            border: `2px solid ${rhombus.bgColor}`,
+                            borderRadius:'10px',
                             opacity: rhombus.opacity,
                             transform: `rotate(${rhombus.rotation}deg)`,
                             boxShadow: '0 0 10px rgba(255,255,255,0.1)',
