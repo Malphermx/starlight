@@ -66,6 +66,12 @@ export function Services1() {
   // Estado para el swipe táctil
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+  // Estado para el arrastre con ratón
+  const [mouseStartX, setMouseStartX] = useState<number | null>(null);
+  const [mouseEndX, setMouseEndX] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
   const minSwipeDistance = 50;
 
   // Observador de entrada para animaciones
@@ -88,7 +94,7 @@ export function Services1() {
     setCurrentIndex((prev) => (prev + 1) % totalServices);
   };
 
-  // Manejadores de swipe
+  // Manejadores de swipe táctil
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStartX(e.targetTouches[0].clientX);
     setTouchEndX(null);
@@ -107,6 +113,49 @@ export function Services1() {
     }
     setTouchStartX(null);
     setTouchEndX(null);
+  };
+
+  // Manejadores de arrastre con ratón
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Evitar que el arrastre se active si se hizo clic en un botón o dentro de uno
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) return;
+    
+    setMouseStartX(e.clientX);
+    setMouseEndX(null);
+    setIsDragging(false);
+    // Cambiar el cursor para indicar que se puede arrastrar
+    document.body.style.userSelect = 'none';
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (mouseStartX === null) return;
+    // Marcar que se está arrastrando
+    setIsDragging(true);
+    setMouseEndX(e.clientX);
+    // Prevenir selección de texto durante el arrastre
+    e.preventDefault();
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (mouseStartX === null || mouseEndX === null) {
+      setMouseStartX(null);
+      setMouseEndX(null);
+      setIsDragging(false);
+      document.body.style.userSelect = '';
+      return;
+    }
+    
+    const distance = mouseEndX - mouseStartX;
+    if (Math.abs(distance) >= minSwipeDistance) {
+      if (distance > 0) goPrev();
+      else goNext();
+    }
+    
+    setMouseStartX(null);
+    setMouseEndX(null);
+    setIsDragging(false);
+    document.body.style.userSelect = '';
   };
 
   const handleOpenModal = (service: typeof allServices[0]) => {
@@ -131,7 +180,6 @@ export function Services1() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/85" />
 
       <div className="relative z-10">
-        {/* Header vacío (opcional, ya no se usa) */}
         <div
           className={cn(
             "text-center max-w-3xl mx-auto pt-10 pb-8 px-4 transition-all duration-1000",
@@ -169,18 +217,23 @@ export function Services1() {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             >
               {/* Imagen de fondo */}
-              <div className="w-full h-[600px] md:h-[400px]">
+              <div className="w-full h-[800px] md:h-[400px]">
                 <img
                   src={currentService.image}
                   alt={currentService.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
+                  draggable={false}
                 />
               </div>
 
               {/* Degradado sutil para mejorar legibilidad */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
               {/* Contenido textual y botón */}
               <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
@@ -244,7 +297,7 @@ export function Services1() {
         <ModalRegistro
           open={modalOpen}
           onOpenChange={setModalOpen}
-          tipoProspecto={selectedService?.title || "general"}
+          tipoProspecto={"general"}
         />
       </div>
     </section>
