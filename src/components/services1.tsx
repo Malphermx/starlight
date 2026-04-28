@@ -9,6 +9,7 @@ import farm from "@/assets/farmacia.jpg";
 import curacion from "@/assets/curacion.jpg";
 import domicilio from "@/assets/domicilio.jpeg";
 import equipomedico from "@/assets/equipomedico.jpg";
+import car1 from "@/assets/carr1.jpeg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
   Dialog,
@@ -179,6 +180,11 @@ function ModalMoreInfo({
 
 // Todos los servicios con título y descripción corta
 const allServices = [
+  {
+    image: car1,
+    title: "Membresias",
+    description: "Obtén los mejores servicios.",
+  },
   {
     image: domicilio,
     title: "Atención Médica a Domicilio",
