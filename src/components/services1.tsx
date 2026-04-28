@@ -148,7 +148,7 @@ function ModalMoreInfo({
 
           {/* Descripción extendida */}
           <div>
-            <h4 className="text-lg font-semibold mb-2">Descripción completa</h4>
+            <h4 className="text-lg font-semibold mb-2">Descripción</h4>
             <p className="text-gray-700 dark:text-gray-300">{details.fullDescription}</p>
           </div>
 
@@ -474,7 +474,7 @@ export function Services1() {
         <ModalRegistro
           open={modalOpen}
           onOpenChange={setModalOpen}
-          tipoProspecto={selectedService?.title || "general"}
+          tipoProspecto={"general"}
         />
         <ModalMoreInfo
           open={moreInfoModalOpen}
