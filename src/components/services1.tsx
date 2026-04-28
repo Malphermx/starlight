@@ -397,7 +397,7 @@ export function Services1() {
               onMouseUp={handleMouseUp}
               style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             >
-              <div className="w-full h-[800px] md:h-[400px]">
+              <div className="w-full h-[600px] md:h-[400px]">
                 <img
                   src={currentService.image}
                   alt={currentService.title}
