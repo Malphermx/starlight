@@ -30,18 +30,18 @@ const galleryImages = [
 export function Gallery() {
   const [isVisible, setIsVisible] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [activeFilter, setActiveFilter] = useState("Todos")
+  const [activeFilter, setActiveFilter] = useState("StarLight")
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  const categories = ["Todos", ...new Set(galleryImages.map(img => img.category))]
+  const categories = ["StarLight", ...new Set(galleryImages.map(img => img.category))]
 
-  const filteredImages = activeFilter === "Todos" 
+  const filteredImages = activeFilter === "StarLight" 
     ? galleryImages 
     : galleryImages.filter(img => img.category === activeFilter)
 
-  // Resetea el lightbox si cambia el filtro a "Todos"
+  // Resetea el lightbox si cambia el filtro a "StarLight"
   useEffect(() => {
-    if (activeFilter === "Todos") {
+    if (activeFilter === "StarLight") {
       setSelectedImage(null)
     }
   }, [activeFilter])
@@ -64,20 +64,20 @@ export function Gallery() {
   }, [])
 
   const nextImage = () => {
-    if (selectedImage !== null && activeFilter !== "Todos") {
+    if (selectedImage !== null && activeFilter !== "StarLight") {
       setSelectedImage((selectedImage + 1) % filteredImages.length)
     }
   }
 
   const prevImage = () => {
-    if (selectedImage !== null && activeFilter !== "Todos") {
+    if (selectedImage !== null && activeFilter !== "StarLight") {
       setSelectedImage(selectedImage === 0 ? filteredImages.length - 1 : selectedImage - 1)
     }
   }
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedImage === null || activeFilter === "Todos") return
+      if (selectedImage === null || activeFilter === "StarLight") return
       if (e.key === "ArrowRight") nextImage()
       if (e.key === "ArrowLeft") prevImage()
       if (e.key === "Escape") setSelectedImage(null)
@@ -127,8 +127,8 @@ export function Gallery() {
           ))}
         </div>
 
-        {/* Contenido condicional: Video para "Todos" / Grid de imágenes para otros filtros */}
-        {activeFilter === "Todos" ? (
+        {/* Contenido condicional: Video para "StarLight" / Grid de imágenes para otros filtros */}
+        {activeFilter === "StarLight" ? (
           <div className={cn(
             "transition-all duration-1000",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -200,7 +200,7 @@ export function Gallery() {
       </div>
 
       {/* Lightbox (solo para imágenes) */}
-      {selectedImage !== null && activeFilter !== "Todos" && (
+      {selectedImage !== null && activeFilter !== "StarLight" && (
         <div 
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
           onClick={() => setSelectedImage(null)}
