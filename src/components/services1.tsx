@@ -10,6 +10,8 @@ import curacion from "@/assets/curacion.jpg";
 import domicilio from "@/assets/domicilio.jpeg";
 import equipomedico from "@/assets/equipomedico.jpg";
 import car1 from "@/assets/carr1.jpeg";
+import car2 from "@/assets/ejerd.jpeg";
+import car21 from "@/assets/ejerm.jpeg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
   Dialog,
@@ -138,22 +140,22 @@ function ModalMoreInfo({
         </DialogHeader>
 
         <div className="mt-4 space-y-6">
-          {/* Imagen del servicio */}
           <div className="relative w-full h-64 rounded-lg overflow-hidden">
-            <img
-              src={typeof service.image === "string" ? service.image : service.image.src}
-              alt={service.title}
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source media="(max-width: 768px)" srcSet={service.imageMobile} />
+              <img
+                src={service.imageDesktop}
+                alt={service.title}
+                className="w-full h-full object-cover"
+              />
+            </picture>
           </div>
 
-          {/* Descripción extendida */}
           <div>
             <h4 className="text-lg font-semibold mb-2">Descripción</h4>
             <p className="text-gray-700 dark:text-gray-300">{details.fullDescription}</p>
           </div>
 
-          {/* Beneficios y características (viñetas) */}
           <div>
             <h4 className="text-lg font-semibold mb-2">Características y beneficios</h4>
             <ul className="list-disc pl-5 space-y-1 text-gray-700 dark:text-gray-300">
@@ -163,7 +165,6 @@ function ModalMoreInfo({
             </ul>
           </div>
 
-          {/* Botón CTA extra opcional */}
           <div className="pt-4">
             <Button
               className="w-full bg-primary hover:bg-primary/90"
@@ -178,50 +179,60 @@ function ModalMoreInfo({
   );
 }
 
-// Todos los servicios con título y descripción corta
+// Todos los servicios con imágenes desktop (horizontal) y mobile (vertical)
+// Reemplaza las rutas con las tuyas
 const allServices = [
   {
-    image: car1,
+    imageDesktop: car1,
+    imageMobile: car1,
     title: "Membresias",
     description: "Obtén los mejores servicios.",
   },
   {
-    image: domicilio,
+    imageDesktop: car2,
+    imageMobile: car21,
     title: "Atención Médica a Domicilio",
     description: "Médicos generales y especialistas que te visitan en casa.",
   },
   {
-    image: ambulence,
+    imageDesktop: ambulence,
+    imageMobile: ambulence,
     title: "Servicios de Ambulancias",
     description: "Traslados de emergencia 24/7 en CDMX y área metropolitana.",
   },
   {
-    image: "/images/service-nursing.jpg",
+    imageDesktop: "/images/service-nursing.jpg",
+    imageMobile: "/images/service-nursing-mobile.jpg",
     title: "Enfermería",
     description: "Auxiliares y enfermeras especialistas para cuidados continuos.",
   },
   {
-    image: rehab,
+    imageDesktop: rehab,
+    imageMobile: rehab,
     title: "Rehabilitación",
     description: "Terapia física, ocupacional, neurológica y de lenguaje.",
   },
   {
-    image: "/images/service-oxygen.jpg",
+    imageDesktop: "/images/service-oxygen.jpg",
+    imageMobile: "/images/service-oxygen-mobile.jpg",
     title: "Oxigenoterapia",
     description: "Equipos de oxigenoterapia y ventilación mecánica a domicilio.",
   },
   {
-    image: farm,
+    imageDesktop: farm,
+    imageMobile: farm,
     title: "Farmacias Corporativas",
     description: "Medicamentos de alta especialidad con entrega nacional.",
   },
   {
-    image: curacion,
+    imageDesktop: curacion,
+    imageMobile: curacion,
     title: "Material de Curación",
     description: "Suministros médicos e implantes con disponibilidad inmediata.",
   },
   {
-    image: equipomedico,
+    imageDesktop: equipomedico,
+    imageMobile: equipomedico,
     title: "Venta y Renta de Equipo Médico",
     description: "Camas hospitalarias, sillas de ruedas y más.",
   },
@@ -237,18 +248,14 @@ export function Services1() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalServices = allServices.length;
 
-  // Estado para el swipe táctil
+  // Swipe y arrastre
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
-
-  // Estado para el arrastre con ratón
   const [mouseStartX, setMouseStartX] = useState<number | null>(null);
   const [mouseEndX, setMouseEndX] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-
   const minSwipeDistance = 50;
 
-  // Observador de entrada para animaciones
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -268,7 +275,6 @@ export function Services1() {
     setCurrentIndex((prev) => (prev + 1) % totalServices);
   };
 
-  // Manejadores de swipe táctil
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStartX(e.targetTouches[0].clientX);
     setTouchEndX(null);
@@ -289,11 +295,10 @@ export function Services1() {
     setTouchEndX(null);
   };
 
-  // Manejadores de arrastre con ratón
   const handleMouseDown = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
+    // Evitar que los botones activen el drag
     if (target.closest('button')) return;
-    
     setMouseStartX(e.clientX);
     setMouseEndX(null);
     setIsDragging(false);
@@ -307,21 +312,14 @@ export function Services1() {
     e.preventDefault();
   };
 
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (mouseStartX === null || mouseEndX === null) {
-      setMouseStartX(null);
-      setMouseEndX(null);
-      setIsDragging(false);
-      document.body.style.userSelect = '';
-      return;
+  const handleMouseUp = () => {
+    if (mouseStartX !== null && mouseEndX !== null) {
+      const distance = mouseEndX - mouseStartX;
+      if (Math.abs(distance) >= minSwipeDistance) {
+        if (distance > 0) goPrev();
+        else goNext();
+      }
     }
-    
-    const distance = mouseEndX - mouseStartX;
-    if (Math.abs(distance) >= minSwipeDistance) {
-      if (distance > 0) goPrev();
-      else goNext();
-    }
-    
     setMouseStartX(null);
     setMouseEndX(null);
     setIsDragging(false);
@@ -344,51 +342,18 @@ export function Services1() {
     <section
       id="servicios"
       ref={sectionRef}
-      className="relative overflow-hidden bg-gray-900 border"
-      style={{ paddingTop: "50px" }}
+      className="relative overflow-hidden bg-gray-900"
+      style={{ minHeight: "100vh" }}
     >
-      {/* Fondo */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/medical-equipment.jpg')" }}
-      />
       <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/85" />
 
-      <div className="relative z-10">
-        <div
-          className={cn(
-            "text-center max-w-3xl mx-auto pt-10 pb-8 px-4 transition-all duration-1000",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          )}
-        />
-
-        {/* Carrusel */}
-        <div className="w-full px-4 md:px-0 py-5">
-          <div className="relative flex items-center justify-center">
-            {/* Botón anterior */}
-            <button
-              onClick={goPrev}
-              className="absolute left-2 md:left-4 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
-              aria-label="Anterior servicio"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
-            {/* Contenedor de imagen con arrastre */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Carrusel principal - ocupa todo el espacio vertical disponible */}
+        <div className="flex-1 flex items-center justify-center px-4 md:px-0 md:py-0" style={{marginTop:'120px'}}>
+          <div className="relative w-full max-w-7xl mx-auto">
+            {/* Contenedor de la imagen con swipe - AHORA también contiene los botones de navegación dentro */}
             <div
-              className="relative w-full md:w-4/5 mx-auto overflow-hidden rounded-2xl shadow-2xl"
+              className="relative w-full overflow-hidden rounded-2xl shadow-2xl"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -397,97 +362,97 @@ export function Services1() {
               onMouseUp={handleMouseUp}
               style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             >
-              <div className="w-full h-[600px] md:h-[400px]">
-                <img
-                  src={currentService.image}
-                  alt={currentService.title}
-                  className="w-full h-full object-cover pointer-events-none"
-                  draggable={false}
-                />
-              </div>
+              {/* Altura dinámica: en desktop ocupa casi toda la pantalla */}
+              <div className="relative w-full" style={{ height: "calc(100vh - 120px)", maxHeight: "80vh" }}>
+                <picture className="block w-full h-full">
+                  <source media="(max-width: 768px)" srcSet={currentService.imageMobile} />
+                  <img
+                    src={currentService.imageDesktop}
+                    alt={currentService.title}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
+                </picture>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
+                {/* Gradiente oscuro para legibilidad */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
-              {/* Contenido textual y botones */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
-                <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2 drop-shadow-lg">
-                  {currentService.title}
-                </h3>
-                <p className="text-sm md:text-base text-white/90 mb-3 md:mb-4 max-w-lg drop-shadow">
-                  {currentService.description}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    size="default"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
-                    onClick={() => handleOpenModal(currentService)}
-                  >
-                    Solicitar información
-                  </Button>
-                  <Button
-                    size="default"
-                    variant="outline"
-                    className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 rounded-full shadow-lg"
-                    onClick={() => handleOpenMoreInfo(currentService)}
-                  >
-                    Ver más información
-                  </Button>
+                {/* Botón anterior - DENTRO de la imagen */}
+                <button
+                  onClick={goPrev}
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
+                  aria-label="Anterior servicio"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Botón siguiente - DENTRO de la imagen */}
+                <button
+                  onClick={goNext}
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
+                  aria-label="Siguiente servicio"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Texto y botones de acción - también dentro de la imagen */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10">
+                  <h3 className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg">
+                    {currentService.title}
+                  </h3>
+                  <p className="text-base md:text-lg text-white/90 mb-4 max-w-2xl drop-shadow">
+                    {currentService.description}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <Button
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
+                      onClick={() => handleOpenModal(currentService)}
+                    >
+                      Solicitar información
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 rounded-full shadow-lg"
+                      onClick={() => handleOpenMoreInfo(currentService)}
+                    >
+                      Ver más información
+                    </Button>
+                  </div>
+                  {/* Indicadores (puntos) fuera de la imagen pero dentro del viewport */}
+                  <div className="flex justify-center gap-2 pb-6 pt-2">
+                    {allServices.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentIndex(idx)}
+                        className={cn(
+                          "h-2 rounded-full transition-all duration-300",
+                          idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
+                        )}
+                        aria-label={`Ir al servicio ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-
-            {/* Botón siguiente */}
-            <button
-              onClick={goNext}
-              className="absolute right-2 md:right-4 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
-              aria-label="Siguiente servicio"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Indicadores */}
-          <div className="flex justify-center gap-2 mt-8">
-            {allServices.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={cn(
-                  "h-2 rounded-full transition-all duration-300",
-                  idx === currentIndex
-                    ? "w-8 bg-primary"
-                    : "w-2 bg-white/30 hover:bg-white/50"
-                )}
-                aria-label={`Ir al servicio ${idx + 1}`}
-              />
-            ))}
           </div>
         </div>
-
-        {/* Modales */}
-        <ModalRegistro
-          open={modalOpen}
-          onOpenChange={setModalOpen}
-          tipoProspecto={"general"}
-        />
-        <ModalMoreInfo
-          open={moreInfoModalOpen}
-          onOpenChange={setMoreInfoModalOpen}
-          service={selectedServiceForMoreInfo}
-        />
       </div>
+
+
+
+      <ModalRegistro open={modalOpen} onOpenChange={setModalOpen} tipoProspecto={"general"} />
+      <ModalMoreInfo
+        open={moreInfoModalOpen}
+        onOpenChange={setMoreInfoModalOpen}
+        service={selectedServiceForMoreInfo}
+      />
     </section>
   );
 }
