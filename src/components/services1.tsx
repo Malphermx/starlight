@@ -345,15 +345,15 @@ export function Services1() {
       className="relative overflow-hidden bg-gray-900"
       style={{ minHeight: "100vh" }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/85" />
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/85" /> */}
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Carrusel principal - ocupa todo el espacio vertical disponible */}
-        <div className="flex-1 flex items-center justify-center px-4 md:px-0 md:py-0" style={{marginTop:'120px'}}>
-          <div className="relative w-full max-w-7xl mx-auto">
+        <div className="flex-1 flex items-center justify-center px-4 md:px-0 md:py-0" style={{marginTop:'50px'}}>
+          <div className="relative w-full">
             {/* Contenedor de la imagen con swipe - AHORA también contiene los botones de navegación dentro */}
             <div
-              className="relative w-full overflow-hidden rounded-2xl shadow-2xl"
+              className="relative w-full overflow-hidden  shadow-2xl"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
