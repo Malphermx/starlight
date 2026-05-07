@@ -4,26 +4,39 @@ import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react"
 import ambulence from "@/assets/Amb.jpg"
+import ambulence1 from "@/assets/Amb1.jpg"
+import ambulence2 from "@/assets/Amb2.jpg"
 import rehab from "@/assets/rehab.jpg"
 import oficinas from "@/assets/oficinas.jpg"
-import personal from "@/assets/equipo_medico.jpeg"
+import oficinas1 from "@/assets/instalaciones.jpg"
+// import personal from "@/assets/equipo_medico.jpeg"
 import atencion_domicilio from "@/assets/atencion_domicilio.jpeg"
+import atencion_domicilio1 from "@/assets/atencion_domicilio1.jpg"
 import centro_rehab from "@/assets/centro_rehab.jpeg"
+import servicios from "@/assets/servicios1.jpg"
+import servicios1 from "@/assets/servicios2.jpg"
 import consultas from "@/assets/consultas.jpeg"
-import equipomedico from "@/assets/equipomedico.jpg"
+import equipomedico from "@/assets/equipamiento1.jpg"
+import equipomedico2 from "@/assets/equipamiento2.jpg"
 // Importación del video
 import fondoVideo from "@/assets/video/Loop-VideoStarlight-Website.mp4"
 
 const galleryImages = [
-  { src: ambulence, title: "Ambulancias de Emergencia", category: "Urgencias" },
+  { src: ambulence, title: "Ambulancias de Emergencia", category: "Ambulancias" },
+  { src: ambulence1, title: "Ambulancias de Emergencia", category: "Ambulancias" },
+  { src: ambulence2, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
+  { src: atencion_domicilio1, title: "Atención personalizada", category: "Consultas" },
   { src: equipomedico, title: "Equipo Médico", category: "Equipamiento" },
+  { src: equipomedico2, title: "Equipo Médico", category: "Equipamiento" },
   { src: "/images/pharmacy.jpg", title: "Farmacias Corporativas", category: "Farmacia" },
   { src: rehab, title: "Rehabilitación", category: "Terapias" },
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },
-  { src: personal, title: "Equipo", category: "Empresas" },
+  { src: oficinas1, title: "Oficinas", category: "Instalaciones" },
+  // { src: personal, title: "Equipo", category: "Empresas" },
   { src: consultas, title: "Consultas", category: "Terapias" },
-  { src: "/images/hero-medical.jpg", title: "Atención Integral", category: "Servicios" },
+  { src: servicios, title: "Servicio a Domicilio", category: "Servicios" },
+  { src: servicios1, title: "Servicio a Domicilio", category: "Servicios" },
   { src: centro_rehab, title: "Centro de Rehabilitación", category: "Servicios" },
 ]
 
