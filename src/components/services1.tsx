@@ -185,14 +185,14 @@ const allServices = [
   {
     imageDesktop: car1,
     imageMobile: car1,
-    title: "Membresias",
+    title: "Membresías",
     description: "Obtén los mejores servicios.",
   },
   {
     imageDesktop: car2,
     imageMobile: car21,
-    title: "Atención Médica a Domicilio",
-    description: "Médicos generales y especialistas que te visitan en casa.",
+    title: "Soluciones: Servicios a domicilio",
+    description: "Atención médica, terapias, medicamentos y soporte especializado directamente en casa.",
   },
   {
     imageDesktop: ambulence,
@@ -209,8 +209,8 @@ const allServices = [
   {
     imageDesktop: rehab,
     imageMobile: rehab,
-    title: "Rehabilitación",
-    description: "Terapia física, ocupacional, neurológica y de lenguaje.",
+    title: "Centro de rehabilitación",
+    description: "Un espacio diseñado para la recuperación integral, respaldado por personal certificado y equipamiento especializado.",
   },
   {
     imageDesktop: "/images/service-oxygen.jpg",

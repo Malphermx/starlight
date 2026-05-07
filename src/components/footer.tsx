@@ -37,10 +37,10 @@ export default function Footer() {
   return (
     <footer className="bg-foreground text-white relative">
       {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div className="container mx-auto px-4 py-10">
+        <div className="">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="md:flex items-center justify-center">
             <a href="/" className="flex items-center gap-2 mb-4">
               <img
                 src={starlight}
@@ -51,7 +51,7 @@ export default function Footer() {
 
               />
             </a>
-            <p className="text-white/60 mb-6 max-w-sm text-pretty leading-relaxed">
+            <p className="text-white/60 ms-4 max-w-sm text-pretty leading-relaxed">
               Soluciones médicas integrales, donde y cuando las necesites.
               Atención a domicilio, ambulancias, farmacia y equipo médico en todo México.
             </p>
@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div>
+          {/* <div>
             <h4 className="font-bold text-lg mb-4">Servicios</h4>
             <ul className="space-y-3">
               {footerLinks.servicios.map((link, index) => (
@@ -110,7 +110,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
 
