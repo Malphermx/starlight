@@ -9,9 +9,12 @@ import farm from "@/assets/farmacia.jpg";
 import curacion from "@/assets/curacion.jpg";
 import domicilio from "@/assets/domicilio.jpeg";
 import equipomedico from "@/assets/equipomedico.jpg";
-import car1 from "@/assets/carr1.jpeg";
-import car2 from "@/assets/ejerd.jpeg";
-import car21 from "@/assets/ejerm.jpeg";
+import car1 from "@/assets/imageCarrusel-1.jpg";
+import car11 from "@/assets/imageCarrusel-1-responsive.jpg";
+import car2 from "@/assets/imageCarrusel-2.jpg";
+import car21 from "@/assets/imageCarrusel-2-responsive.jpg";
+import car3 from "@/assets/imageCarrusel-3.jpg";
+import car31 from "@/assets/imageCarrusel-3-responsive.jpg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
   Dialog,
@@ -23,7 +26,7 @@ import {
 
 // Definición de detalles extendidos para cada servicio
 const serviceDetails: Record<string, { fullDescription: string; highlights: string[] }> = {
-  "Atención Médica a Domicilio": {
+  "Starlight medical care": {
     fullDescription:
       "Ofrecemos atención médica integral en la comodidad de tu hogar. Nuestro equipo de profesionales de la salud está capacitado para brindar diagnósticos precisos, tratamientos personalizados y seguimiento continuo, evitando traslados innecesarios.",
     highlights: [
@@ -34,7 +37,7 @@ const serviceDetails: Record<string, { fullDescription: string; highlights: stri
       "Reporte médico detallado después de cada visita",
     ],
   },
-  "Servicios de Ambulancias": {
+  "Servicios a domicilio": {
     fullDescription:
       "Contamos con una flota de ambulancias totalmente equipadas para traslados de emergencia, programados y de alta especialidad. Nuestros paramédicos están certificados y capacitados para brindar atención prehospitalaria de calidad.",
     highlights: [
@@ -183,59 +186,66 @@ function ModalMoreInfo({
 // Reemplaza las rutas con las tuyas
 const allServices = [
   {
-    imageDesktop: car1,
-    imageMobile: car1,
-    title: "Membresías",
-    description: "Obtén los mejores servicios.",
-  },
-  {
     imageDesktop: car2,
     imageMobile: car21,
-    title: "Soluciones: Servicios a domicilio",
+    title: "Starlight medical care",
     description: "Atención médica, terapias, medicamentos y soporte especializado directamente en casa.",
   },
   {
-    imageDesktop: ambulence,
-    imageMobile: ambulence,
-    title: "Servicios de Ambulancias",
-    description: "Traslados de emergencia 24/7 en CDMX y área metropolitana.",
+    imageDesktop: car1,
+    imageMobile: car11,
+    title: "Membresías",
+    description: "Obtén los mejores servicios.",
   },
-  {
-    imageDesktop: "/images/service-nursing.jpg",
-    imageMobile: "/images/service-nursing-mobile.jpg",
-    title: "Enfermería",
-    description: "Auxiliares y enfermeras especialistas para cuidados continuos.",
+   {
+    imageDesktop: car3,
+    imageMobile: car31,
+    title: "Servicios a domicilio",
+    description: "Brindamos servicios de salud a domicilio que combinan atención clínica, soporte terapéutico y suministro de insumos, permitiendo una atención continua y organizada.",
   },
-  {
-    imageDesktop: rehab,
-    imageMobile: rehab,
-    title: "Centro de rehabilitación",
-    description: "Un espacio diseñado para la recuperación integral, respaldado por personal certificado y equipamiento especializado.",
-  },
-  {
-    imageDesktop: "/images/service-oxygen.jpg",
-    imageMobile: "/images/service-oxygen-mobile.jpg",
-    title: "Oxigenoterapia",
-    description: "Equipos de oxigenoterapia y ventilación mecánica a domicilio.",
-  },
-  {
-    imageDesktop: farm,
-    imageMobile: farm,
-    title: "Farmacias Corporativas",
-    description: "Medicamentos de alta especialidad con entrega nacional.",
-  },
-  {
-    imageDesktop: curacion,
-    imageMobile: curacion,
-    title: "Material de Curación",
-    description: "Suministros médicos e implantes con disponibilidad inmediata.",
-  },
-  {
-    imageDesktop: equipomedico,
-    imageMobile: equipomedico,
-    title: "Venta y Renta de Equipo Médico",
-    description: "Camas hospitalarias, sillas de ruedas y más.",
-  },
+  
+  // {
+  //   imageDesktop: ambulence,
+  //   imageMobile: ambulence,
+  //   title: "Servicios de Ambulancias",
+  //   description: "Traslados de emergencia 24/7 en CDMX y área metropolitana.",
+  // },
+  // {
+  //   imageDesktop: "/images/service-nursing.jpg",
+  //   imageMobile: "/images/service-nursing-mobile.jpg",
+  //   title: "Enfermería",
+  //   description: "Auxiliares y enfermeras especialistas para cuidados continuos.",
+  // },
+  // {
+  //   imageDesktop: rehab,
+  //   imageMobile: rehab,
+  //   title: "Centro de rehabilitación",
+  //   description: "Un espacio diseñado para la recuperación integral, respaldado por personal certificado y equipamiento especializado.",
+  // },
+  // {
+  //   imageDesktop: "/images/service-oxygen.jpg",
+  //   imageMobile: "/images/service-oxygen-mobile.jpg",
+  //   title: "Oxigenoterapia",
+  //   description: "Equipos de oxigenoterapia y ventilación mecánica a domicilio.",
+  // },
+  // {
+  //   imageDesktop: farm,
+  //   imageMobile: farm,
+  //   title: "Farmacias Corporativas",
+  //   description: "Medicamentos de alta especialidad con entrega nacional.",
+  // },
+  // {
+  //   imageDesktop: curacion,
+  //   imageMobile: curacion,
+  //   title: "Material de Curación",
+  //   description: "Suministros médicos e implantes con disponibilidad inmediata.",
+  // },
+  // {
+  //   imageDesktop: equipomedico,
+  //   imageMobile: equipomedico,
+  //   title: "Venta y Renta de Equipo Médico",
+  //   description: "Camas hospitalarias, sillas de ruedas y más.",
+  // },
 ];
 
 export function Services1() {

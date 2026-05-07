@@ -49,9 +49,9 @@ const features = [
 
 // Datos estadísticos con colores y posiciones alrededor de la doctora
 const statsAroundDoctor = [
-    { value: "+10", label: "años de experiencia", color: "white", posX: "10%", posY: "-10%" },
-    { value: "98%", label: "satisfacción del paciente", color: "green", posX: "85%", posY: "10%" },
-    { value: "24/7", label: "disponibilidad de emergencia", color: "blue", posX: "50%", posY: "95%" },
+    { value: "Terapia", label: "física, ocupacional", color: "white", posX: "10%", posY: "-10%" },
+    { value: "Terapia", label: "de lenguaje , respiratoria", color: "green", posX: "85%", posY: "10%" },
+    { value: "Terapia", label: "de deglución ,  de dermatofuncional", color: "blue", posX: "50%", posY: "95%" },
 ];
 
 // Cruces fijas (7) alrededor de la doctora
