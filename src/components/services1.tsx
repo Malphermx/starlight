@@ -10,10 +10,13 @@ import { Button } from "@/components/ui/button";
 // import domicilio from "@/assets/domicilio.jpeg";
 // import equipomedico from "@/assets/equipomedico.jpg";
 import car1 from "@/assets/imageCarrusel-1.jpg";
-import car11 from "@/assets/imageCarrusel-1-responsive.jpg";
-import car2 from "@/assets/imageCarrusel-2.jpg";
+// import car11 from "@/assets/imageCarrusel-1-responsive.jpg";
+import car11 from "@/assets/imageCarrusel-1-responsive.jpeg";
+// import car2 from "@/assets/imageCarrusel-2.jpg";
+import car2 from "@/assets/imageCarrusel-2.jpeg";
 import car21 from "@/assets/imageCarrusel-2-responsive.jpg";
-import car3 from "@/assets/imageCarrusel-3.jpg";
+// import car3 from "@/assets/imageCarrusel-3.jpg";
+import car3 from "@/assets/imageCarrusel-3.jpeg";
 import car31 from "@/assets/imageCarrusel-3-responsive.jpg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
