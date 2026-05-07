@@ -8,25 +8,32 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2, Phone, Mail, MapPin, MessageCircle, Send, Clock } from "lucide-react"
 import { urlBack } from "@/hooks/url_enpoint"
+import amb from "@/assets/Amb1.jpg";
 
 const contactInfo = [
   {
     icon: Phone,
     title: "Teléfono",
-    value: "56 3558 9236",
-    description: "Línea directa de atención",
+    value: "55 5086 6875",
+    description: "Línea general",
   },
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    value: "52 1 56-35-58-92-36",
-    description: "Respuesta inmediata",
-  },
+  // {
+  //   icon: MessageCircle,
+  //   title: "WhatsApp",
+  //   value: "52 1 56-35-58-92-36",
+  //   description: "Respuesta inmediata",
+  // },
   {
     icon: Mail,
     title: "Email",
-    value: "contacto@starlightmc.com",
+    value: "ventas@starlightmc.com",
     description: "Escríbenos",
+  },
+  {
+    icon: Phone,
+    title: "Teléfono ",
+    value: "55 9562 0581",
+    description: "Centro de Rehabilitación",
   },
   {
     icon: Clock,
@@ -262,7 +269,7 @@ export function Contact() {
             <div className="relative rounded-2xl overflow-hidden h-[250px] bg-muted">
               <div 
                 className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/hero-medical.jpg')" }}
+                style={{ backgroundImage: `url('${amb}')` }}
               />
               <div className="absolute inset-0 bg-primary/20" />
               <div className="absolute inset-0 flex items-center justify-center">

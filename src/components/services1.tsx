@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import ambulence from "@/assets/servicios_medicos.jpg";
-import rehab from "@/assets/rehab.jpg";
-import farm from "@/assets/farmacia.jpg";
-import curacion from "@/assets/curacion.jpg";
-import domicilio from "@/assets/domicilio.jpeg";
-import equipomedico from "@/assets/equipomedico.jpg";
+// import ambulence from "@/assets/servicios_medicos.jpg";
+// import rehab from "@/assets/rehab.jpg";
+// import farm from "@/assets/farmacia.jpg";
+// import curacion from "@/assets/curacion.jpg";
+// import domicilio from "@/assets/domicilio.jpeg";
+// import equipomedico from "@/assets/equipomedico.jpg";
 import car1 from "@/assets/imageCarrusel-1.jpg";
 import car11 from "@/assets/imageCarrusel-1-responsive.jpg";
 import car2 from "@/assets/imageCarrusel-2.jpg";
