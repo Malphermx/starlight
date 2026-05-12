@@ -3,19 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-// import ambulence from "@/assets/servicios_medicos.jpg";
-// import rehab from "@/assets/rehab.jpg";
-// import farm from "@/assets/farmacia.jpg";
-// import curacion from "@/assets/curacion.jpg";
-// import domicilio from "@/assets/domicilio.jpeg";
-// import equipomedico from "@/assets/equipomedico.jpg";
 import car1 from "@/assets/imageCarrusel-1.jpg";
-// import car11 from "@/assets/imageCarrusel-1-responsive.jpg";
 import car11 from "@/assets/imageCarrusel-1-responsive.jpeg";
-// import car2 from "@/assets/imageCarrusel-2.jpg";
 import car2 from "@/assets/imageCarrusel-2.jpeg";
 import car21 from "@/assets/imageCarrusel-2-responsive.jpg";
-// import car3 from "@/assets/imageCarrusel-3.jpg";
 import car3 from "@/assets/imageCarrusel-3.jpeg";
 import car31 from "@/assets/imageCarrusel-3-responsive.jpg";
 import car4 from "@/assets/Enfermeria-1.jpg";
@@ -33,7 +24,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-// Definición de detalles extendidos para cada servicio
+// Definición de detalles extendidos para cada servicio (sin cambios)
 const serviceDetails: Record<string, { fullDescription: string; highlights: string[] }> = {
   "Starlight medical care": {
     fullDescription:
@@ -135,7 +126,7 @@ const serviceDetails: Record<string, { fullDescription: string; highlights: stri
   },
 };
 
-// Modal de información detallada
+// Modal de información detallada (sin cambios)
 function ModalMoreInfo({
   open,
   onOpenChange,
@@ -201,8 +192,7 @@ function ModalMoreInfo({
   );
 }
 
-// Todos los servicios con imágenes desktop (horizontal) y mobile (vertical)
-// Reemplaza las rutas con las tuyas
+// Todos los servicios con imágenes desktop y mobile
 const allServices = [
   {
     imageDesktop: car2,
@@ -214,19 +204,19 @@ const allServices = [
     imageDesktop: car4,
     imageMobile: car41,
     title: "Enfermería",
-    description: "Cuidados profesionales de enfermería las 24 horas, tanto en hospital como en domicilio. Nuestras enfermeras y auxiliares cuentan con amplia experiencia en diversas áreas, garantizando bienestar y seguridad.",
+    description: "Cuidados profesionales de enfermería las 24 horas, tanto en hospital como en domicilio.",
   },
   {
     imageDesktop: car5,
     imageMobile: car51,
     title: "Rehabilitación",
-    description: "Terapias de rehabilitación física, ocupacional y de lenguaje, adaptadas a cada paciente. Trabajamos con equipos de última generación y técnicas innovadoras para acelerar la recuperación funcional.",
+    description: "Terapias de rehabilitación física, ocupacional y de lenguaje, adaptadas a cada paciente.",
   },
   {
     imageDesktop: car3,
     imageMobile: car31,
     title: "Médico a domicilio",
-    description: "Brindamos servicios de salud a domicilio que combinan atención clínica, soporte terapéutico y suministro de insumos, permitiendo una atención continua y organizada.",
+    description: "Brindamos servicios de salud a domicilio que combinan atención clínica, soporte terapéutico y suministro de insumos.",
   },
   {
     imageDesktop: car1,
@@ -238,52 +228,8 @@ const allServices = [
     imageDesktop: car6,
     imageMobile: car61,
     title: "Venta y Renta de Equipo Médico",
-    description: "Amplio catálogo de equipo médico para hospitales, clínicas y uso doméstico, tanto en venta como en renta. Todos nuestros equipos son certificados y reciben mantenimiento preventivo.",
+    description: "Amplio catálogo de equipo médico para hospitales, clínicas y uso doméstico.",
   },
-
-
-  // {
-  //   imageDesktop: ambulence,
-  //   imageMobile: ambulence,
-  //   title: "Servicios de Ambulancias",
-  //   description: "Traslados de emergencia 24/7 en CDMX y área metropolitana.",
-  // },
-  // {
-  //   imageDesktop: "/images/service-nursing.jpg",
-  //   imageMobile: "/images/service-nursing-mobile.jpg",
-  //   title: "Enfermería",
-  //   description: "Auxiliares y enfermeras especialistas para cuidados continuos.",
-  // },
-  // {
-  //   imageDesktop: rehab,
-  //   imageMobile: rehab,
-  //   title: "Centro de rehabilitación",
-  //   description: "Un espacio diseñado para la recuperación integral, respaldado por personal certificado y equipamiento especializado.",
-  // },
-  // {
-  //   imageDesktop: "/images/service-oxygen.jpg",
-  //   imageMobile: "/images/service-oxygen-mobile.jpg",
-  //   title: "Oxigenoterapia",
-  //   description: "Equipos de oxigenoterapia y ventilación mecánica a domicilio.",
-  // },
-  // {
-  //   imageDesktop: farm,
-  //   imageMobile: farm,
-  //   title: "Farmacias Corporativas",
-  //   description: "Medicamentos de alta especialidad con entrega nacional.",
-  // },
-  // {
-  //   imageDesktop: curacion,
-  //   imageMobile: curacion,
-  //   title: "Material de Curación",
-  //   description: "Suministros médicos e implantes con disponibilidad inmediata.",
-  // },
-  // {
-  //   imageDesktop: equipomedico,
-  //   imageMobile: equipomedico,
-  //   title: "Venta y Renta de Equipo Médico",
-  //   description: "Camas hospitalarias, sillas de ruedas y más.",
-  // },
 ];
 
 export function Services1() {
@@ -294,16 +240,64 @@ export function Services1() {
   const [moreInfoModalOpen, setMoreInfoModalOpen] = useState(false);
   const [selectedServiceForMoreInfo, setSelectedServiceForMoreInfo] = useState<typeof allServices[0] | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState<number | null>(null);
+  const [fading, setFading] = useState(false);
   const totalServices = allServices.length;
 
-  // Swipe y arrastre
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-  const [mouseStartX, setMouseStartX] = useState<number | null>(null);
-  const [mouseEndX, setMouseEndX] = useState<number | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const minSwipeDistance = 50;
+  // Referencias
+  const fadeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Duración de la animación (debe coincidir con CSS: 700ms)
+  const TRANSITION_DURATION = 700;
+  // Intervalo de autoplay: 4 segundos
+  const AUTOPLAY_INTERVAL = 4000;
+
+  // Transición con efecto elegante (fade + zoom)
+  const transitionTo = (newIndex: number) => {
+    if (fading || newIndex === currentIndex) return;
+    setFading(true);
+    setNextIndex(newIndex);
+
+    if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
+    fadeTimeoutRef.current = setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setNextIndex(null);
+      setFading(false);
+      fadeTimeoutRef.current = null;
+    }, TRANSITION_DURATION);
+  };
+
+  const goPrev = () => {
+    const newIndex = (currentIndex - 1 + totalServices) % totalServices;
+    transitionTo(newIndex);
+  };
+
+  const goNext = () => {
+    const newIndex = (currentIndex + 1) % totalServices;
+    transitionTo(newIndex);
+  };
+
+  // Autoplay continuo cada 4 segundos
+  useEffect(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      goNext();
+    }, AUTOPLAY_INTERVAL);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [currentIndex]);
+
+  // Limpiar timeout al desmontar
+  useEffect(() => {
+    return () => {
+      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
+    };
+  }, []);
+
+  // Observador de visibilidad (sin cambios)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -315,25 +309,25 @@ export function Services1() {
     return () => observer.disconnect();
   }, []);
 
-  const goPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalServices) % totalServices);
-  };
-
-  const goNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalServices);
-  };
+  // Swipe y arrastre (sin cambios relevantes)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const [mouseStartX, setMouseStartX] = useState<number | null>(null);
+  const [mouseEndX, setMouseEndX] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const minSwipeDistance = 50;
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (fading) return;
     setTouchStartX(e.targetTouches[0].clientX);
     setTouchEndX(null);
   };
-
   const handleTouchMove = (e: React.TouchEvent) => {
+    if (fading) return;
     setTouchEndX(e.targetTouches[0].clientX);
   };
-
   const handleTouchEnd = () => {
-    if (touchStartX === null || touchEndX === null) return;
+    if (fading || touchStartX === null || touchEndX === null) return;
     const distance = touchEndX - touchStartX;
     if (Math.abs(distance) >= minSwipeDistance) {
       if (distance > 0) goPrev();
@@ -342,26 +336,22 @@ export function Services1() {
     setTouchStartX(null);
     setTouchEndX(null);
   };
-
   const handleMouseDown = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    // Evitar que los botones activen el drag
-    if (target.closest('button')) return;
+    if (target.closest('button') || fading) return;
     setMouseStartX(e.clientX);
     setMouseEndX(null);
     setIsDragging(false);
     document.body.style.userSelect = 'none';
   };
-
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (mouseStartX === null) return;
+    if (mouseStartX === null || fading) return;
     setIsDragging(true);
     setMouseEndX(e.clientX);
     e.preventDefault();
   };
-
   const handleMouseUp = () => {
-    if (mouseStartX !== null && mouseEndX !== null) {
+    if (mouseStartX !== null && mouseEndX !== null && !fading) {
       const distance = mouseEndX - mouseStartX;
       if (Math.abs(distance) >= minSwipeDistance) {
         if (distance > 0) goPrev();
@@ -378,13 +368,13 @@ export function Services1() {
     setSelectedService(service);
     setModalOpen(true);
   };
-
   const handleOpenMoreInfo = (service: typeof allServices[0]) => {
     setSelectedServiceForMoreInfo(service);
     setMoreInfoModalOpen(true);
   };
 
   const currentService = allServices[currentIndex];
+  const nextService = nextIndex !== null ? allServices[nextIndex] : null;
 
   return (
     <section
@@ -393,15 +383,11 @@ export function Services1() {
       className="relative overflow-hidden bg-gray-900"
       style={{ minHeight: "100vh" }}
     >
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/85" /> */}
-
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Carrusel principal - ocupa todo el espacio vertical disponible */}
-        <div className="flex-1 flex items-center justify-center px-4 md:px-0 md:py-0" style={{ marginTop: '50px' }}>
+        <div className="flex-1 flex items-center justify-center px-4 md:px-0" style={{ marginTop: '50px' }}>
           <div className="relative w-full">
-            {/* Contenedor de la imagen con swipe - AHORA también contiene los botones de navegación dentro */}
             <div
-              className="relative w-full overflow-hidden  shadow-2xl"
+              className="relative w-full overflow-hidden shadow-2xl"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -410,44 +396,75 @@ export function Services1() {
               onMouseUp={handleMouseUp}
               style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             >
-              {/* Altura dinámica: en desktop ocupa casi toda la pantalla */}
               <div className="relative w-full" style={{ height: "calc(100vh - 120px)", maxHeight: "80vh" }}>
-                <picture className="block w-full h-full">
-                  <source media="(max-width: 768px)" srcSet={currentService.imageMobile} />
-                  <img
-                    src={currentService.imageDesktop}
-                    alt={currentService.title}
-                    className="w-full h-full object-cover"
-                    draggable={false}
-                  />
-                </picture>
+                {/* Imagen actual - sale con fade out */}
+                <div
+                  className="absolute inset-0 "
+                  style={{
+                    opacity: nextIndex !== null ? 0 : 1,
+                    transform: nextIndex !== null ? 'scale(1.02)' : 'scale(1)',
+                  }}
+                >
+                  <picture className="block w-full h-full">
+                    <source media="(max-width: 768px)" srcSet={currentService.imageMobile} />
+                    <img
+                      src={currentService.imageDesktop}
+                      alt={currentService.title}
+                      className="w-full h-full object-cover"
+                      draggable={false}
+                    />
+                  </picture>
+                </div>
 
-                {/* Gradiente oscuro para legibilidad */}
+                {/* Nueva imagen - entra con fade + zoom desde 1.05 hasta 1 */}
+                {nextService && (
+                  <div
+                    className="absolute inset-0 transition-all duration-700 ease-out"
+                    style={{
+                      opacity: 1,
+                      transform: 'scale(1)',
+                      animation: 'kenBurnsIn 700ms ease-out forwards',
+                    }}
+                  >
+                    <picture className="block w-full h-full">
+                      <source media="(max-width: 768px)" srcSet={nextService.imageMobile} />
+                      <img
+                        src={nextService.imageDesktop}
+                        alt={nextService.title}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                      />
+                    </picture>
+                  </div>
+                )}
+
+                {/* Gradiente y overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
-                {/* Botón anterior - DENTRO de la imagen */}
+                {/* Botones de navegación */}
                 <button
                   onClick={goPrev}
-                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50"
                   aria-label="Anterior servicio"
+                  disabled={fading}
                 >
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
 
-                {/* Botón siguiente - DENTRO de la imagen */}
                 <button
                   onClick={goNext}
-                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300"
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50"
                   aria-label="Siguiente servicio"
+                  disabled={fading}
                 >
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
 
-                {/* Texto y botones de acción - también dentro de la imagen */}
+                {/* Texto y acciones */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10">
                   <h3 className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg">
                     {currentService.title}
@@ -472,17 +489,20 @@ export function Services1() {
                       Ver más información
                     </Button>
                   </div>
-                  {/* Indicadores (puntos) fuera de la imagen pero dentro del viewport */}
+                  {/* Indicadores */}
                   <div className="flex justify-center gap-2 pb-6 pt-2">
                     {allServices.map((_, idx) => (
                       <button
                         key={idx}
-                        onClick={() => setCurrentIndex(idx)}
+                        onClick={() => {
+                          if (!fading && idx !== currentIndex) transitionTo(idx);
+                        }}
                         className={cn(
-                          "h-2 rounded-full transition-all duration-300",
+                          "h-2 rounded-full transition-all duration-300 disabled:opacity-50",
                           idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
                         )}
                         aria-label={`Ir al servicio ${idx + 1}`}
+                        disabled={fading}
                       />
                     ))}
                   </div>
@@ -493,7 +513,19 @@ export function Services1() {
         </div>
       </div>
 
-
+      {/* Animación CSS personalizada para el zoom elegante */}
+      <style jsx>{`
+        @keyframes kenBurnsIn {
+          0% {
+            opacity: 0;
+            transform: scale(1.08);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
 
       <ModalRegistro open={modalOpen} onOpenChange={setModalOpen} tipoProspecto={"general"} />
       <ModalMoreInfo
