@@ -18,6 +18,12 @@ import car21 from "@/assets/imageCarrusel-2-responsive.jpg";
 // import car3 from "@/assets/imageCarrusel-3.jpg";
 import car3 from "@/assets/imageCarrusel-3.jpeg";
 import car31 from "@/assets/imageCarrusel-3-responsive.jpg";
+import car4 from "@/assets/Enfermeria-1.jpg";
+import car41 from "@/assets/Enfermeria-2.jpg";
+import car5 from "@/assets/Rehabilitacion-1.jpg";
+import car51 from "@/assets/Rehabilitacion-2.jpg";
+import car6 from "@/assets/EquipoMed-1.jpg";
+import car61 from "@/assets/EquipoMed-2.jpg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
   Dialog,
@@ -50,6 +56,16 @@ const serviceDetails: Record<string, { fullDescription: string; highlights: stri
       "Disponibilidad inmediata las 24 horas, los 365 días",
       "Atención a eventos masivos y concentraciones",
     ],
+  },
+  "Membresías": {
+    fullDescription: "Ofrecemos planes de membresía anual que garantizan acceso preferente y cobertura en servicios de ambulancia y atención prehospitalaria. Ideal para familias, empresas o personas que buscan tranquilidad y respuesta inmediata ante una emergencia médica, con costos reducidos y beneficios exclusivos.",
+    highlights: [
+      "Cobertura nacional en traslados terrestres y aéreos",
+      "Sin costo adicional por horario nocturno, fines de semana o días festivos",
+      "Descuentos exclusivos en servicios de ambulancia para no miembros",
+      "Atención prioritaria con tiempo de respuesta garantizado",
+      "Planes para individuos, familias y empresas con facturación mensual o anual"
+    ]
   },
   Enfermería: {
     fullDescription:
@@ -195,18 +211,37 @@ const allServices = [
     description: "Atención médica, terapias, medicamentos y soporte especializado directamente en casa.",
   },
   {
+    imageDesktop: car4,
+    imageMobile: car41,
+    title: "Enfermería",
+    description: "Cuidados profesionales de enfermería las 24 horas, tanto en hospital como en domicilio. Nuestras enfermeras y auxiliares cuentan con amplia experiencia en diversas áreas, garantizando bienestar y seguridad.",
+  },
+  {
+    imageDesktop: car5,
+    imageMobile: car51,
+    title: "Rehabilitación",
+    description: "Terapias de rehabilitación física, ocupacional y de lenguaje, adaptadas a cada paciente. Trabajamos con equipos de última generación y técnicas innovadoras para acelerar la recuperación funcional.",
+  },
+  {
+    imageDesktop: car3,
+    imageMobile: car31,
+    title: "Médico a domicilio",
+    description: "Brindamos servicios de salud a domicilio que combinan atención clínica, soporte terapéutico y suministro de insumos, permitiendo una atención continua y organizada.",
+  },
+  {
     imageDesktop: car1,
     imageMobile: car11,
     title: "Membresías",
     description: "Obtén los mejores servicios.",
   },
-   {
-    imageDesktop: car3,
-    imageMobile: car31,
-    title: "Servicios a domicilio",
-    description: "Brindamos servicios de salud a domicilio que combinan atención clínica, soporte terapéutico y suministro de insumos, permitiendo una atención continua y organizada.",
+  {
+    imageDesktop: car6,
+    imageMobile: car61,
+    title: "Venta y Renta de Equipo Médico",
+    description: "Amplio catálogo de equipo médico para hospitales, clínicas y uso doméstico, tanto en venta como en renta. Todos nuestros equipos son certificados y reciben mantenimiento preventivo.",
   },
-  
+
+
   // {
   //   imageDesktop: ambulence,
   //   imageMobile: ambulence,
@@ -362,7 +397,7 @@ export function Services1() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Carrusel principal - ocupa todo el espacio vertical disponible */}
-        <div className="flex-1 flex items-center justify-center px-4 md:px-0 md:py-0" style={{marginTop:'50px'}}>
+        <div className="flex-1 flex items-center justify-center px-4 md:px-0 md:py-0" style={{ marginTop: '50px' }}>
           <div className="relative w-full">
             {/* Contenedor de la imagen con swipe - AHORA también contiene los botones de navegación dentro */}
             <div

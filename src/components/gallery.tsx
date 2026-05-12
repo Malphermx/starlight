@@ -37,9 +37,9 @@ import farmacia1 from "@/assets/farmacia1.jpg"
 import farmacia2 from "@/assets/farmacia2.jpg"
 import farmacia3 from "@/assets/farmacia3.jpg"
 import farmacia4 from "@/assets/farmacia4.jpg"
-import farmacia5 from "@/assets/farmacia5.jpg"
+// import farmacia5 from "@/assets/farmacia5.jpg"
 import farmacia6 from "@/assets/farmacia6.jpg"
-import farmacia7 from "@/assets/famacia7.jpg"
+// import farmacia7 from "@/assets/famacia7.jpg"
 // Importación del video
 import fondoVideo from "@/assets/video/Loop-VideoStarlight-Website.mp4"
 
