@@ -22,7 +22,7 @@ export function Header() {
 
   const navItems = [
     { label: "Servicios", href: "#servicios" },
-    { label: "Centro de Rehabilitacion", href: "#rehabilitacion" },
+    { label: "Centro de Rehabilitación", href: "#rehabilitacion" },
     { label: "Instalaciones", href: "#instalaciones" },
     { label: "Cobertura", href: "#cobertura" },
     { label: "Contacto", href: "#contacto" },
