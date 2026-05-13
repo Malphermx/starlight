@@ -22,7 +22,8 @@ export function Header() {
 
   const navItems = [
     { label: "Servicios", href: "#servicios" },
-    { label: "Nosotros", href: "#nosotros" },
+    { label: "Centro de Rehabilitacion", href: "#rehabilitacion" },
+    { label: "Instalaciones", href: "#instalaciones" },
     { label: "Cobertura", href: "#cobertura" },
     { label: "Contacto", href: "#contacto" },
   ]
@@ -55,7 +56,7 @@ export function Header() {
             {navItems.map((item) => (
               <a
                 key={item.label}
-                // href={item.href}
+                href={item.href}
                 // className={cn(
                 //   "relative font-medium transition-colors duration-300 hover:text-primary",
                 //   "after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full",

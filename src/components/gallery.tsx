@@ -144,7 +144,7 @@ export function Gallery() {
   }, [selectedImage, activeFilter])
 
   return (
-    <section ref={sectionRef} className="py-24 bg-muted/30 relative overflow-hidden">
+    <section id="instalaciones" ref={sectionRef} className="py-24 bg-muted/30 relative overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className={cn(

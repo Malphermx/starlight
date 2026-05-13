@@ -297,7 +297,7 @@ export function CentroRehabilitacion() {
 
     return (
         <section
-            id="servicios"
+            id="rehabilitacion"
             ref={sectionRef}
             className="relative overflow-hidden bg-gray-900"
             style={{ paddingTop: "30px" }}
