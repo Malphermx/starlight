@@ -380,10 +380,10 @@ export function Services1() {
   const ServiceContent = ({ service }: { service: typeof allServices[0] }) => (
     <>
       {/* Gradiente sobre la imagen para mejorar legibilidad */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none"  />
       
       {/* Contenido textual (título, descripción y botones) */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10">
+      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10 h-300px">
         <h3 className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg">
           {service.title}
         </h3>
@@ -478,7 +478,7 @@ export function Services1() {
                 {/* Botones de navegación (siempre visibles) */}
                 <button
                   onClick={goPrev}
-                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50"
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50 hidden-mobile"
                   aria-label="Anterior servicio"
                   disabled={fading}
                 >
@@ -489,7 +489,7 @@ export function Services1() {
 
                 <button
                   onClick={goNext}
-                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50"
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50 hidden-mobile"
                   aria-label="Siguiente servicio"
                   disabled={fading}
                 >
