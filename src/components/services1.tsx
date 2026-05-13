@@ -248,12 +248,12 @@ export function Services1() {
   const fadeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Duración de la animación (debe coincidir con CSS: 700ms)
+  // Duración de la animación de zoom (700ms)
   const TRANSITION_DURATION = 700;
   // Intervalo de autoplay: 4 segundos
   const AUTOPLAY_INTERVAL = 4000;
 
-  // Transición con efecto elegante (fade + zoom)
+  // Transición con solo zoom (sin fade)
   const transitionTo = (newIndex: number) => {
     if (fading || newIndex === currentIndex) return;
     setFading(true);
@@ -376,6 +376,41 @@ export function Services1() {
   const currentService = allServices[currentIndex];
   const nextService = nextIndex !== null ? allServices[nextIndex] : null;
 
+  // Componente interno para evitar repetir el markup del texto
+  const ServiceContent = ({ service }: { service: typeof allServices[0] }) => (
+    <>
+      {/* Gradiente sobre la imagen para mejorar legibilidad */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
+      
+      {/* Contenido textual (título, descripción y botones) */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10">
+        <h3 className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg">
+          {service.title}
+        </h3>
+        <p className="text-base md:text-lg text-white/90 mb-4 max-w-2xl drop-shadow">
+          {service.description}
+        </p>
+        <div className="flex flex-wrap gap-4">
+          <Button
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
+            onClick={() => handleOpenModal(service)}
+          >
+            Solicitar información
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 rounded-full shadow-lg"
+            onClick={() => handleOpenMoreInfo(service)}
+          >
+            Ver más información
+          </Button>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <section
       id="servicios"
@@ -397,12 +432,13 @@ export function Services1() {
               style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             >
               <div className="relative w-full" style={{ height: "calc(100vh - 120px)", maxHeight: "80vh" }}>
-                {/* Imagen actual - sale con fade out */}
+                
+                {/* Imagen actual (desaparece instantáneamente cuando hay nextIndex) */}
                 <div
-                  className="absolute inset-0 "
+                  className="absolute inset-0"
                   style={{
                     opacity: nextIndex !== null ? 0 : 1,
-                    transform: nextIndex !== null ? 'scale(1.02)' : 'scale(1)',
+                    transition: 'none',
                   }}
                 >
                   <picture className="block w-full h-full">
@@ -414,16 +450,16 @@ export function Services1() {
                       draggable={false}
                     />
                   </picture>
+                  <ServiceContent service={currentService} />
                 </div>
 
-                {/* Nueva imagen - entra con fade + zoom desde 1.05 hasta 1 */}
+                {/* Nueva imagen (entra solo con zoom, sin fade) */}
                 {nextService && (
                   <div
-                    className="absolute inset-0 transition-all duration-700 ease-out"
+                    className="absolute inset-0"
                     style={{
                       opacity: 1,
-                      transform: 'scale(1)',
-                      animation: 'kenBurnsIn 700ms ease-out forwards',
+                      animation: 'zoomIn 700ms ease-out forwards',
                     }}
                   >
                     <picture className="block w-full h-full">
@@ -435,13 +471,11 @@ export function Services1() {
                         draggable={false}
                       />
                     </picture>
+                    <ServiceContent service={nextService} />
                   </div>
                 )}
 
-                {/* Gradiente y overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
-
-                {/* Botones de navegación */}
+                {/* Botones de navegación (siempre visibles) */}
                 <button
                   onClick={goPrev}
                   className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50"
@@ -464,64 +498,37 @@ export function Services1() {
                   </svg>
                 </button>
 
-                {/* Texto y acciones */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10">
-                  <h3 className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg">
-                    {currentService.title}
-                  </h3>
-                  <p className="text-base md:text-lg text-white/90 mb-4 max-w-2xl drop-shadow">
-                    {currentService.description}
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <Button
-                      size="lg"
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg"
-                      onClick={() => handleOpenModal(currentService)}
-                    >
-                      Solicitar información
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 rounded-full shadow-lg"
-                      onClick={() => handleOpenMoreInfo(currentService)}
-                    >
-                      Ver más información
-                    </Button>
-                  </div>
-                  {/* Indicadores */}
-                  <div className="flex justify-center gap-2 pb-6 pt-2">
-                    {allServices.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => {
-                          if (!fading && idx !== currentIndex) transitionTo(idx);
-                        }}
-                        className={cn(
-                          "h-2 rounded-full transition-all duration-300 disabled:opacity-50",
-                          idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
-                        )}
-                        aria-label={`Ir al servicio ${idx + 1}`}
-                        disabled={fading}
-                      />
-                    ))}
-                  </div>
+                {/* Indicadores (siempre visibles) */}
+                <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-6 z-20">
+                  {allServices.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        if (!fading && idx !== currentIndex) transitionTo(idx);
+                      }}
+                      className={cn(
+                        "h-2 rounded-full transition-all duration-300 disabled:opacity-50",
+                        idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
+                      )}
+                      aria-label={`Ir al servicio ${idx + 1}`}
+                      disabled={fading}
+                    />
+                  ))}
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Animación CSS personalizada para el zoom elegante */}
+      {/* Animación CSS personalizada: solo zoom, sin opacidad */}
       <style jsx>{`
-        @keyframes kenBurnsIn {
+        @keyframes zoomIn {
           0% {
-            opacity: 0;
             transform: scale(1.08);
           }
           100% {
-            opacity: 1;
             transform: scale(1);
           }
         }
