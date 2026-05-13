@@ -215,7 +215,7 @@ const allServices = [
   {
     imageDesktop: car3,
     imageMobile: car31,
-    title: "Médico a domicilio",
+    title: "Servicios a domicilio",
     description: "Brindamos servicios de salud a domicilio que combinan atención clínica, soporte terapéutico y suministro de insumos.",
   },
   {
