@@ -118,7 +118,7 @@ export default function Footer() {
                   className="h-12 w-auto transition-all duration-300"
                 />
               </a>
-              <p className="text-white/60 ms-4 max-w-sm text-pretty leading-relaxed">
+              <p className="text-white/60 ms-4 max-w-sm text-pretty leading-relaxed" style={{textAlign:'justify'}}>
                 Soluciones médicas integrales, donde y cuando las necesites.
                 Atención a domicilio, ambulancias, farmacia y equipo médico en todo México.
               </p>

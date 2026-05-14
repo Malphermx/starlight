@@ -15,6 +15,8 @@ import car5 from "@/assets/Rehabilitacion-1.jpg";
 import car51 from "@/assets/Rehabilitacion-2.jpg";
 import car6 from "@/assets/EquipoMed-1.jpg";
 import car61 from "@/assets/EquipoMed-2.jpg";
+import car7 from "@/assets/Farmacias-1920x530.jpg";
+import car71 from "@/assets/Farmacias-500x800.jpg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
   Dialog,
@@ -230,6 +232,12 @@ const allServices = [
     title: "Venta y Renta de Equipo Médico",
     description: "Amplio catálogo de equipo médico para hospitales, clínicas y uso doméstico.",
   },
+   {
+    imageDesktop: car7,
+    imageMobile: car71,
+    title: "Farmacias Corporativas",
+    description: "Abastecimiento de medicamentos de alta especialidad, genéricos y de patente para hospitales, clínicas, empresas y particulares. Contamos con cadena de frío y distribución a nivel nacional.",
+  },
 ];
 
 export function Services1() {
@@ -242,6 +250,8 @@ export function Services1() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState<number | null>(null);
   const [fading, setFading] = useState(false);
+  // Nuevo estado para el tipo de prospecto
+  const [prospectType, setProspectType] = useState<"general" | "empresas" | "proveedores">("general");
   const totalServices = allServices.length;
 
   // Referencias
@@ -366,8 +376,19 @@ export function Services1() {
 
   const handleOpenModal = (service: typeof allServices[0]) => {
     setSelectedService(service);
+    setProspectType("general");   // Para el botón "Solicitar información"
     setModalOpen(true);
   };
+  // Nuevas funciones para los botones de empresa y proveedor
+  const handleOpenEmpresas = () => {
+    setProspectType("empresa");
+    setModalOpen(true);
+  };
+  const handleOpenProveedores = () => {
+    setProspectType("proveedor");
+    setModalOpen(true);
+  };
+
   const handleOpenMoreInfo = (service: typeof allServices[0]) => {
     setSelectedServiceForMoreInfo(service);
     setMoreInfoModalOpen(true);
@@ -380,8 +401,8 @@ export function Services1() {
   const ServiceContent = ({ service }: { service: typeof allServices[0] }) => (
     <>
       {/* Gradiente sobre la imagen para mejorar legibilidad */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none"  />
-      
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
+
       {/* Contenido textual (título, descripción y botones) */}
       <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white z-10 h-300px">
         <h3 className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg">
@@ -412,118 +433,168 @@ export function Services1() {
   );
 
   return (
-    <section
-      id="servicios"
-      ref={sectionRef}
-      className="relative overflow-hidden bg-gray-900"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="relative z-10 flex flex-col min-h-screen">
-        <div className="flex-1 flex items-center justify-center px-4 md:px-0" style={{ marginTop: '50px' }}>
-          <div className="relative w-full">
-            <div
-              className="relative w-full overflow-hidden shadow-2xl"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
-            >
-              <div className="relative w-full" style={{ height: "calc(100vh - 120px)", maxHeight: "80vh" }}>
-                
-                {/* Imagen actual (desaparece instantáneamente cuando hay nextIndex) */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    opacity: nextIndex !== null ? 0 : 1,
-                    transition: 'none',
-                  }}
-                >
-                  <picture className="block w-full h-full">
-                    <source media="(max-width: 768px)" srcSet={currentService.imageMobile} />
-                    <img
-                      src={currentService.imageDesktop}
-                      alt={currentService.title}
-                      className="w-full h-full object-cover"
-                      draggable={false}
-                    />
-                  </picture>
-                  <ServiceContent service={currentService} />
-                </div>
+    <>
+      <section
+        id="servicios"
+        ref={sectionRef}
+        className="relative overflow-hidden bg-gray-900"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <div className="flex-1 flex items-center justify-center pt-4 md:px-0" style={{ marginTop: '50px' }}>
+            <div className="relative w-full">
+              <div
+                className="relative w-full overflow-hidden shadow-2xl"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+              >
+                <div className="relative w-full" style={{ height: "calc(100vh - 120px)", maxHeight: "80vh" }}>
 
-                {/* Nueva imagen (entra solo con zoom, sin fade) */}
-                {nextService && (
+                  {/* Imagen actual (desaparece instantáneamente cuando hay nextIndex) */}
                   <div
                     className="absolute inset-0"
                     style={{
-                      opacity: 1,
-                      animation: 'zoomIn 700ms ease-out forwards',
+                      opacity: nextIndex !== null ? 0 : 1,
+                      transition: 'none',
                     }}
                   >
                     <picture className="block w-full h-full">
-                      <source media="(max-width: 768px)" srcSet={nextService.imageMobile} />
+                      <source media="(max-width: 768px)" srcSet={currentService.imageMobile} />
                       <img
-                        src={nextService.imageDesktop}
-                        alt={nextService.title}
+                        src={currentService.imageDesktop}
+                        alt={currentService.title}
                         className="w-full h-full object-cover"
                         draggable={false}
                       />
                     </picture>
-                    <ServiceContent service={nextService} />
+                    <ServiceContent service={currentService} />
                   </div>
-                )}
 
-                {/* Botones de navegación (siempre visibles) */}
-                <button
-                  onClick={goPrev}
-                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50 hidden-mobile"
-                  aria-label="Anterior servicio"
-                  disabled={fading}
-                >
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-
-                <button
-                  onClick={goNext}
-                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50 hidden-mobile"
-                  aria-label="Siguiente servicio"
-                  disabled={fading}
-                >
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                {/* Indicadores (siempre visibles) */}
-                <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-6 z-20">
-                  {allServices.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        if (!fading && idx !== currentIndex) transitionTo(idx);
+                  {/* Nueva imagen (entra solo con zoom, sin fade) */}
+                  {nextService && (
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        opacity: 1,
+                        animation: 'zoomIn 700ms ease-out forwards',
                       }}
-                      className={cn(
-                        "h-2 rounded-full transition-all duration-300 disabled:opacity-50",
-                        idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
-                      )}
-                      aria-label={`Ir al servicio ${idx + 1}`}
-                      disabled={fading}
-                    />
-                  ))}
-                </div>
+                    >
+                      <picture className="block w-full h-full">
+                        <source media="(max-width: 768px)" srcSet={nextService.imageMobile} />
+                        <img
+                          src={nextService.imageDesktop}
+                          alt={nextService.title}
+                          className="w-full h-full object-cover"
+                          draggable={false}
+                        />
+                      </picture>
+                      <ServiceContent service={nextService} />
+                    </div>
+                  )}
 
+                  {/* Botones de navegación (siempre visibles) */}
+                  <button
+                    onClick={goPrev}
+                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50 hidden-mobile"
+                    aria-label="Anterior servicio"
+                    disabled={fading}
+                  >
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+
+                  <button
+                    onClick={goNext}
+                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 backdrop-blur-sm text-white hover:bg-primary transition-all duration-300 disabled:opacity-50 hidden-mobile"
+                    aria-label="Siguiente servicio"
+                    disabled={fading}
+                  >
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+
+                  {/* Indicadores (siempre visibles) */}
+                  <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-6 z-20">
+                    {allServices.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          if (!fading && idx !== currentIndex) transitionTo(idx);
+                        }}
+                        className={cn(
+                          "h-2 rounded-full transition-all duration-300 disabled:opacity-50",
+                          idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/30 hover:bg-white/50"
+                        )}
+                        aria-label={`Ir al servicio ${idx + 1}`}
+                        disabled={fading}
+                      />
+                    ))}
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Animación CSS personalizada: solo zoom, sin opacidad */}
-      <style jsx>{`
+          {/* SECCIÓN MODIFICADA: dos botones para empresas y proveedores */}
+          <div className="bg-white py-8 px-4 md:px-8">
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6 justify-center items-stretch">
+              {/* Botón / Tarjeta para Empresas */}
+              <button
+                onClick={handleOpenEmpresas}
+                className="group flex-1 flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-white border border-blue-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <div className="p-3 bg-blue-100 rounded-full text-blue-600 group-hover:scale-110 transition-transform duration-300">
+                  {/* Icono de edificio/empresa (SVG inline) */}
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <div className="font-bold text-xl text-gray-800">¿Eres una empresa?</div>
+                  <div className="text-sm text-gray-500">Contacta con Starlight para soluciones corporativas</div>
+                </div>
+                <div className="ml-auto text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </button>
+
+              {/* Botón / Tarjeta para Proveedores */}
+              <button
+                onClick={handleOpenProveedores}
+                className="group flex-1 flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <div className="p-3 bg-emerald-100 rounded-full text-emerald-600 group-hover:scale-110 transition-transform duration-300">
+                  {/* Icono de apretón de manos / proveedores */}
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <div className="font-bold text-xl text-gray-800">Únete como proveedor</div>
+                  <div className="text-sm text-gray-500">Forma parte de nuestra red de servicios y suministros</div>
+                </div>
+                <div className="ml-auto text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Animación CSS personalizada: solo zoom, sin opacidad */}
+        <style jsx>{`
         @keyframes zoomIn {
           0% {
             transform: scale(1.08);
@@ -534,12 +605,13 @@ export function Services1() {
         }
       `}</style>
 
-      <ModalRegistro open={modalOpen} onOpenChange={setModalOpen} tipoProspecto={"general"} />
-      <ModalMoreInfo
-        open={moreInfoModalOpen}
-        onOpenChange={setMoreInfoModalOpen}
-        service={selectedServiceForMoreInfo}
-      />
-    </section>
+        <ModalRegistro open={modalOpen} onOpenChange={setModalOpen} tipoProspecto={prospectType} />
+        <ModalMoreInfo
+          open={moreInfoModalOpen}
+          onOpenChange={setMoreInfoModalOpen}
+          service={selectedServiceForMoreInfo}
+        />
+      </section>
+    </>
   );
 }

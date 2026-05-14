@@ -19,6 +19,7 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 // import fondo3 from "@/assets/3.png"
 import { Services1 } from "@/components/services1";
 import { CentroRehabilitacion } from "@/components/centroRehabilitación";
+import BandaBotones from "@/components/bandaBotones";
 
 const Index = () => {
 
@@ -28,6 +29,7 @@ const Index = () => {
       <Header />
       {/* <Hero/> */}
       <Services1 />
+      <BandaBotones/>
       <CentroRehabilitacion/>
       <Gallery />
       <Coverage />
