@@ -33,10 +33,22 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg py-3"
-          : "bg-white py-3"
+          ? "bg-white/95 backdrop-blur-md shadow-lg pb-3"
+          : "bg-white pb-3"
       )}
     >
+      <div className="container mx-auto px-4">
+        <div className=" hidden lg:flex justify-end">
+          <div className="lg:flex mt-1" style={{ fontSize: '14px', color: '#2C9653', fontWeight: '800' }}>
+            <div className="cta-link" style={{ cursor: 'pointer' }} onClick={() => {
+              window.open("#", "_blank")
+            }}>Ingresa a tu cuenta</div>
+            <div className="mx-4 cta-link" style={{ cursor: 'pointer' }} onClick={() => {
+              window.open("https://membresia.starlightmc.com/", "_blank")
+            }}>Adquiere tu membresia</div>
+          </div>
+        </div>
+      </div>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -53,6 +65,7 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
+
             {navItems.map((item) => (
               <a
                 key={item.label}
@@ -123,6 +136,8 @@ export function Header() {
           )}
         >
           <nav className="flex flex-col gap-4 bg-white rounded-xl p-4 shadow-xl">
+            <a href="#" target="_blank" onClick={() => setIsMobileMenuOpen(false)} className="text-foreground font-medium py-2 hover:text-primary transition-colors">Ingresa a tu cuenta</a>
+            <a href="#" target="_blank" onClick={() => setIsMobileMenuOpen(false)} className="text-foreground font-medium py-2 hover:text-primary transition-colors">Adquiere tu membresia</a>
             {navItems.map((item) => (
               <a
                 key={item.label}
