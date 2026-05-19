@@ -7,13 +7,13 @@ import ambulence from "@/assets/Amb.jpg"
 import ambulence1 from "@/assets/Amb1.jpg"
 import ambulence2 from "@/assets/Amb2.jpg"
 import ambulence3 from "@/assets/Ambulancias.jpg"
+import ambulence4 from "@/assets/Amb3.jpg"
 import rehab from "@/assets/rehab.jpg"
 import oficinas from "@/assets/oficinas.jpg"
 import oficinas1 from "@/assets/instalaciones.jpg"
-import oficinas2 from "@/assets/Instalaciones1.jpg"
 import oficinas3 from "@/assets/Instalaciones2.jpg"
-// import personal from "@/assets/equipo_medico.jpeg"
-import atencion_domicilio from "@/assets/atencion_domicilio.jpeg"
+import oficinas4 from "@/assets/Instalacione3.jpeg"
+import oficinas5 from "@/assets/Instalaciones4.jpeg"
 import atencion_domicilio1 from "@/assets/atencion_domicilio1.jpg"
 import atencion_domicilio2 from "@/assets/consultas.jpg"
 import atencion_domicilio3 from "@/assets/consultas1.jpg"
@@ -22,65 +22,71 @@ import atencion_domicilio5 from "@/assets/consultas3.jpeg"
 import centro_rehab from "@/assets/centro_rehab.jpeg"
 import servicios from "@/assets/servicios1.jpg"
 import servicios1 from "@/assets/servicios2.jpg"
+import servicios2 from "@/assets/Oxigenoterapia.png"
+import servicios3 from "@/assets/repartidor.png"
 import consultas from "@/assets/consultas.jpeg"
-// import consultas1 from "@/assets/terapia.jpg"
 import consultas2 from "@/assets/terapia1.png"
-import consultas3 from "@/assets/terapia2.jpg"
-// import consultas4 from "@/assets/terapia3.jpg"
-// import consultas5 from "@/assets/terapia4.jpg"
+import consultas4 from "@/assets/Terapia6.jpeg"
 import consultas6 from "@/assets/terapia5.jpg"
-import equipomedico from "@/assets/equipamiento1.jpg"
-import equipomedico2 from "@/assets/equipamiento2.jpg"
+import equipomedico from "@/assets/Equipo_Oxigeno_1.png"
+import equipomedico2 from "@/assets/Equipo_Oxigeno_2.png"
 import equipomedico3 from "@/assets/equipo.jpeg"
 import equipomedico4 from "@/assets/equipo1.jpg"
+import equipomedico5 from "@/assets/Equipo_Oxigeno_3.png"
 import farmacia1 from "@/assets/farmacia1.jpg"
 import farmacia2 from "@/assets/farmacia2.jpg"
-import farmacia3 from "@/assets/farmacia3.jpg"
-import farmacia4 from "@/assets/farmacia4.jpg"
-// import farmacia5 from "@/assets/farmacia5.jpg"
+import farmacia3 from "@/assets/farmacias_corporativas_1.png"
+import farmacia4 from "@/assets/farmacias_corporativas_2.png"
 import farmacia6 from "@/assets/farmacia6.jpg"
-// import farmacia7 from "@/assets/famacia7.jpg"
-// Importación del video
 import fondoVideo from "@/assets/video/Loop-VideoStarlight-Website.mp4"
+
 
 const galleryImages = [
   { src: ambulence, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   { src: ambulence1, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   { src: ambulence2, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   { src: ambulence3, title: "Ambulancias de Emergencia", category: "Ambulancias" },
-  { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
+  { src: ambulence4, title: "Ambulancias de Emergencia", category: "Ambulancias" },
+  // { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
+  { src: atencion_domicilio5, title: "Atención personalizada", category: "Consultas" },
   { src: atencion_domicilio1, title: "Atención personalizada", category: "Consultas" },
   { src: atencion_domicilio2, title: "Atención personalizada", category: "Consultas" },
   { src: atencion_domicilio3, title: "Atención personalizada", category: "Consultas" },
   { src: atencion_domicilio4, title: "Atención personalizada", category: "Consultas" },
-  { src: atencion_domicilio5, title: "Atención personalizada", category: "Consultas" },
-  { src: equipomedico, title: "Equipo Médico", category: "Equipamiento" },
-  { src: equipomedico2, title: "Equipo Médico", category: "Equipamiento" },
-  { src: equipomedico3, title: "Equipo Médico", category: "Equipamiento" },
-  { src: equipomedico4, title: "Equipo Médico", category: "Equipamiento" },
-  { src: farmacia1, title: "Farmacias Corporativas", category: "Farmacia" },
-  { src: farmacia2, title: "Farmacias Corporativas", category: "Farmacia" },
-  { src: farmacia3, title: "Farmacias Corporativas", category: "Farmacia" },
-  { src: farmacia4, title: "Farmacias Corporativas", category: "Farmacia" },
-  // { src: farmacia5, title: "Farmacias Corporativas", category: "Farmacia" },
-  { src: farmacia6, title: "Farmacias Corporativas", category: "Farmacia" },
-  // { src: farmacia7, title: "Farmacias Corporativas", category: "Farmacia" },
-  { src: rehab, title: "Rehabilitación", category: "Terapias" },
+  
+  { src: equipomedico3, title: "Equipo Médico", category: "Venta y renta de equipo médico" },
+  { src: equipomedico4, title: "Equipo Médico", category: "Venta y renta de equipo médico" },
+  { src: equipomedico, title: "Equipo Médico", category: "Venta y renta de equipo médico" },
+  { src: equipomedico2, title: "Equipo Médico", category: "Venta y renta de equipo médico" },
+  { src: equipomedico5, title: "Equipo Médico", category: "Venta y renta de equipo médico" },
+
+  
+  
+  { src: farmacia3, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
+  { src: farmacia4, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
+  { src: farmacia6, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
+  { src: farmacia1, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
+  { src: farmacia2, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
+  
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },
   { src: oficinas1, title: "Oficinas", category: "Instalaciones" },
-  { src: oficinas2, title: "Oficinas", category: "Instalaciones" },
+  // { src: oficinas2, title: "Oficinas", category: "Instalaciones" },
   { src: oficinas3, title: "Oficinas", category: "Instalaciones" },
-  // { src: personal, title: "Equipo", category: "Empresas" },
-  { src: consultas, title: "Consultas", category: "Terapias" },
-  // { src: consultas1, title: "Consultas", category: "Terapias" },
-  { src: consultas2, title: "Consultas", category: "Terapias" },
-  { src: consultas3, title: "Consultas", category: "Terapias" },
-  // { src: consultas4, title: "Consultas", category: "Terapias" },
-  // { src: consultas5, title: "Consultas", category: "Terapias" },
-  { src: consultas6, title: "Consultas", category: "Terapias" },
+  { src: oficinas4, title: "Oficinas", category: "Instalaciones" },
+  { src: oficinas5, title: "Oficinas", category: "Instalaciones" },
+  { src: rehab, title: "Rehabilitación", category: "Rehabilitación" },
+  { src: consultas, title: "Consultas", category: "Rehabilitación" },
+  { src: consultas2, title: "Consultas", category: "Rehabilitación" },
+  // { src: consultas3, title: "Consultas", category: "Rehabilitación" },
+  { src: consultas6, title: "Consultas", category: "Rehabilitación" },
+  { src: consultas4, title: "Consultas", category: "Rehabilitación" },
+
+
   { src: servicios, title: "Servicio a Domicilio", category: "Servicios" },
   { src: servicios1, title: "Servicio a Domicilio", category: "Servicios" },
   { src: centro_rehab, title: "Centro de Rehabilitación", category: "Servicios" },
+  { src: servicios2, title: "Oxigenoterapia", category: "Servicios" },
+  { src: servicios3, title: "Servicio a Domicilio", category: "Servicios" },
 ]
 
 export function Gallery() {
