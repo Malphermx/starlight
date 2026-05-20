@@ -16,6 +16,7 @@ const contactInfo = [
     title: "Teléfono",
     value: "55 5086 6875",
     description: "Línea general",
+    url:'tel:+5215595620581'
   },
   // {
   //   icon: MessageCircle,
@@ -34,6 +35,7 @@ const contactInfo = [
     title: "Teléfono ",
     value: "55 9562 0581",
     description: "Centro de Rehabilitación",
+    url:'tel:+5215595620581'
   },
   {
     icon: Clock,
@@ -46,11 +48,12 @@ const contactInfo = [
 const serviciosDisponibles = [
   { id: "atencionmedica", label: "Atención médica" },
   { id: "ambulancias", label: "Ambulancias y urgencias" },
-  { id: "farmacia", label: "Farmacia" },
+  { id: "farmacias Corporativas", label: "Farmacias Corporativas" },
   { id: "rehabilitacion", label: "Rehabilitación" },
   { id: "enfermeria", label: "Enfermería" },
   { id: "oxigeno", label: "Oxígeno y ventilación" },
   { id: "equipo", label: "Equipo médico y material de curación" },
+  { id: "servicios a domicilio", label: "Servicios a domicilio" },
 ]
 
 // Constantes de validación
@@ -258,7 +261,11 @@ export function Contact() {
                       <Icon className="w-6 h-6 text-primary group-hover:text-white" />
                     </div>
                     <h3 className="font-bold text-foreground mb-1">{item.title}</h3>
+                    {item.url?
+                    <a href={item.url} target="_blank" className="text-primary  font-semibold">{item.value}</a>
+                    :
                     <p className="text-primary font-semibold">{item.value}</p>
+                    }
                     <p className="text-muted-foreground text-sm">{item.description}</p>
                   </div>
                 )

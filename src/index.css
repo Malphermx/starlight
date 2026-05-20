@@ -227,6 +227,11 @@
 .text-blue {
   color: #171a1d;
 }
+.bgUrgencia{
+  background-color: orange;
+  color: white;
+
+}
 
 .card-centro {
   background-color: rgba(255, 255, 255, 0.9);
