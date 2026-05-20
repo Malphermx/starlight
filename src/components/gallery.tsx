@@ -62,11 +62,11 @@ const galleryImages = [
 
   
   
-  { src: farmacia3, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
-  { src: farmacia4, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
-  { src: farmacia6, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
-  { src: farmacia1, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
-  { src: farmacia2, title: "Farmacias Corporativas", category: "Farmacia Corporativas" },
+  { src: farmacia3, title: "Farmacias Corporativas", category: "Farmacias Corporativas" },
+  { src: farmacia4, title: "Farmacias Corporativas", category: "Farmacias Corporativas" },
+  { src: farmacia6, title: "Farmacias Corporativas", category: "Farmacias Corporativas" },
+  { src: farmacia1, title: "Farmacias Corporativas", category: "Farmacias Corporativas" },
+  { src: farmacia2, title: "Farmacias Corporativas", category: "Farmacias Corporativas" },
   
   { src: oficinas, title: "Oficinas", category: "Instalaciones" },
   { src: oficinas1, title: "Oficinas", category: "Instalaciones" },
