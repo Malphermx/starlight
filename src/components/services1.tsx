@@ -17,6 +17,11 @@ import car6 from "@/assets/EquipoMed-1.jpg";
 import car61 from "@/assets/EquipoMed-2.jpg";
 import car7 from "@/assets/Farmacias-1920x530.jpg";
 import car71 from "@/assets/Farmacias-500x800.jpg";
+import car8 from "@/assets/Oxigenoterapia-1920x530.jpg";
+import car81 from "@/assets/Oxigenoterapia-500x800.jpg";
+// import car71 from "@/assets/Farmacias-500x800.jpg";
+import car9 from "@/assets/Ambulancia-1920x530.jpg";
+import car91 from "@/assets/Ambulancia-500x800.jpg";
 import { ModalRegistro } from "./ModalRegistro";
 import {
   Dialog,
@@ -243,12 +248,12 @@ function ModalMoreInfo({
 
 // Todos los servicios con imágenes desktop y mobile
 const allServices = [
-  {
-    imageDesktop: car2,
-    imageMobile: car21,
-    title: "Starlight medical care",
-    description: "Atención médica, terapias, medicamentos y soporte especializado directamente en casa.",
-  },
+  // {
+  //   imageDesktop: car2,
+  //   imageMobile: car21,
+  //   title: "Starlight medical care",
+  //   description: "Atención médica, terapias, medicamentos y soporte especializado directamente en casa.",
+  // },
   {
     imageDesktop: car2,
     imageMobile: car21,
@@ -268,8 +273,8 @@ const allServices = [
     description: "Atención médica, medicamentos, material de curación y equipo médico a domicilio.",
   },
   {
-    imageDesktop: car2,
-    imageMobile: car21,
+    imageDesktop: car8,
+    imageMobile: car81,
     title: "Oxigenoterapia",
     description: "Servicio especializado con suministro de oxígeno medicinal y equipos certificados para brindar soporte respiratorio seguro y eficiente a domicilio.",
   },
@@ -310,8 +315,8 @@ const allServices = [
     description: "Amplio catálogo de equipo médico para hospitales, clínicas y uso doméstico.",
   },
   {
-    imageDesktop: car6,
-    imageMobile: car61,
+    imageDesktop: car9,
+    imageMobile: car91,
     title: "Servicio de ambulancias",
     description: "Urgencias y traslados médicos con atención rápida, segura y profesional.",
   },
@@ -519,7 +524,7 @@ export function Services1() {
         style={{ minHeight: "100vh" }}
       >
         <div className="relative z-10 flex flex-col min-h-screen">
-          <div className="flex-1 flex items-center justify-center pt-4 md:px-0" style={{ marginTop: '50px' }}>
+          <div className="flex-1 flex items-center justify-center pt-4 md:px-0" style={{ marginTop: '100px' }}>
             <div className="relative w-full">
               <div
                 className="relative w-full overflow-hidden shadow-2xl"
