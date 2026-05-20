@@ -255,11 +255,17 @@ const allServices = [
     title: "Medico a Domicilio",
     description: "Atención médica a domicilio con calidad, confianza y cuidado profesional, llevando bienestar y tranquilidad hasta la puerta de tu hogar.",
   },
+  // {
+  //   imageDesktop: car2,
+  //   imageMobile: car21,
+  //   title: "Entregas a domicilio",
+  //   description: "Servicio especializado en entrega de medicamentos, material de curación y equipo médico a domicilio.",
+  // },
   {
-    imageDesktop: car2,
-    imageMobile: car21,
-    title: "Entregas a domicilio",
-    description: "Servicio especializado en entrega de medicamentos, material de curación y equipo médico a domicilio.",
+    imageDesktop: car3,
+    imageMobile: car31,
+    title: "Servicios a domicilio",
+    description: "Atención médica, medicamentos, material de curación y equipo médico a domicilio.",
   },
   {
     imageDesktop: car2,
@@ -279,12 +285,12 @@ const allServices = [
     title: "Rehabilitación",
     description: "Servicio de terapias de rehabilitación a domicilio, enfocado en la recuperación física, funcional y respiratoria mediante atención profesional y personalizada.",
   },
-  {
-    imageDesktop: car3,
-    imageMobile: car31,
-    title: "Servicios a domicilio",
-    description: "Atención médica, medicamentos, material de curación y equipo médico a domicilio.",
-  },
+  // {
+  //   imageDesktop: car3,
+  //   imageMobile: car31,
+  //   title: "Servicios a domicilio",
+  //   description: "Atención médica, medicamentos, material de curación y equipo médico a domicilio.",
+  // },
   {
     imageDesktop: car1,
     imageMobile: car11,
