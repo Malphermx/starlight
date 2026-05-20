@@ -16,7 +16,7 @@ const contactInfo = [
     title: "Teléfono",
     value: "55 5086 6875",
     description: "Línea general",
-    url:'tel:+5215595620581'
+    url:'tel:+5215550866875'
   },
   // {
   //   icon: MessageCircle,

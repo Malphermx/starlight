@@ -511,7 +511,7 @@ export function Services1() {
               variant="outline"
               className="bgUrgencia text-white  rounded-full shadow-lg"
               onClick={() => {
-                const numero = "+5215595620581";
+                const numero = "+5215550866875";
                 window.location.href = `tel:${numero}`;
 
               }}
