@@ -37,11 +37,12 @@ const coverageItems = [
 
 const serviceTypes = [
   "Ambulancias",
-  "Farmacia",
+  "Farmacias Corporativas",
+  "Consultas",
   "Rehabilitación",
-  "Equipos Médicos",
+  "Venta y renta de equipo médico",
   "Enfermería",
-  "Oxígeno",
+  "Oxigenoterapia",
 ]
 
 export function Coverage() {
