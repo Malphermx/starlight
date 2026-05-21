@@ -17,8 +17,8 @@ import oficinas5 from "@/assets/Instalaciones4.jpeg"
 import atencion_domicilio1 from "@/assets/atencion_domicilio1.jpg"
 import atencion_domicilio2 from "@/assets/consultas.jpg"
 import atencion_domicilio3 from "@/assets/consultas1.jpg"
-import atencion_domicilio4 from "@/assets/consultas2.jpeg"
-import atencion_domicilio5 from "@/assets/consultas3.jpeg"
+import atencion_domicilio4 from "@/assets/consultas2.png"
+import atencion_domicilio5 from "@/assets/consultas3.png"
 import centro_rehab from "@/assets/centro_rehab.jpeg"
 import servicios from "@/assets/servicios1.jpg"
 import servicios1 from "@/assets/servicios2.jpg"
@@ -45,7 +45,7 @@ const galleryImages = [
   { src: ambulence, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   { src: ambulence1, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   { src: ambulence2, title: "Ambulancias de Emergencia", category: "Ambulancias" },
-  { src: ambulence3, title: "Ambulancias de Emergencia", category: "Ambulancias" },
+  { src: ambulence3, title: "Traslados y Emergencias", category: "Ambulancias" },
   { src: ambulence4, title: "Ambulancias de Emergencia", category: "Ambulancias" },
   // { src: atencion_domicilio, title: "Atención a Domicilio", category: "Consultas" },
   { src: atencion_domicilio5, title: "Atención personalizada", category: "Consultas" },
